@@ -1,0 +1,30 @@
+include make/config.mk
+include make/srcs.mk
+include libft/make/srcs.mk
+
+CFLAGS			+=			-g
+
+LFT_O_DIR		=			$(addprefix $(OUTDIR), dev-libft/)
+LFT_O_FILES		=			$(addprefix $(LFT_O_DIR), $(FT_SRCS:.c=.o))
+
+O_DIR			=			$(addprefix $(OUTDIR), dev/)
+O_FILES			=			$(addprefix $(O_DIR), $(SRCS:.c=.o))
+
+all: $(NAME)
+
+$(NAME): $(LFT_O_FILES) $(O_FILES)
+	$(CC) -o $(DEV_NAME) $(LFT_O_FILES) $(O_FILES) $(MLX_ARGS) 
+
+$(LFT_O_DIR)%.o: ./libft/src/%.c
+	@if [ ! -d $(dir $@) ]; then mkdir -p $(dir $@); fi
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+$(O_DIR)%.o: $(SRCDIR)%.c
+	@if [ ! -d $(dir $@) ]; then mkdir -p $(dir $@); fi
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+clean:
+	@rm -f $(O_FILES)
+
+fclean:
+	@rm -f $(NAME)

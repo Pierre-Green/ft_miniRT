@@ -1,0 +1,23 @@
+include make/config.mk
+include make/srcs.mk
+
+O_DIR			=			$(addprefix $(OUTDIR), prod/)
+O_FILES			=			$(addprefix $(O_DIR), $(SRCS:.c=.o))
+
+all: $(LIBFT) $(NAME)
+
+$(LIBFT):
+	$(MAKE) -C $(MK_LFT)
+
+$(NAME): $(O_FILES)
+	$(CC) -o $(NAME) $(O_FILES) $(LIBFT) $(MLX_ARGS)
+
+$(O_DIR)%.o: $(SRCDIR)%.c
+	@if [ ! -d $(dir $@) ]; then mkdir -p $(dir $@); fi
+	$(CC) $(CFLAGS) -o $@ -c $<
+
+clean:
+	@rm -f $(O_FILES)
+
+fclean:
+	@rm -f $(NAME)
