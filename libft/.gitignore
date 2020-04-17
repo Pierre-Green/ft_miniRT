@@ -1,8 +1,0 @@
-.vscode/
-main.c
-*.out
-*.dSYM
-libft_dev.a
-libft.a
-objs/
-todo
