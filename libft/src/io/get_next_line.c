@@ -6,7 +6,7 @@
 /*   By: pguthaus <pguthaus@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/17 19:49:24 by pguthaus          #+#    #+#             */
-/*   Updated: 2019/11/26 01:00:01 by pguthaus         ###   ########.fr       */
+/*   Updated: 2020/04/18 00:15:09 by pguthaus         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,7 @@ static int			read_do_buff(t_buff *buff, int fd, char **line, int score)
 
 int					get_next_line(int fd, char **line)
 {
-	static t_buff	*buff[(unsigned long)INT_MAX + 1];
+	static t_buff	*buff[1024];
 	t_buff			*ptr;
 	int				read_ret;
 
