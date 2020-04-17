@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pguthaus <pguthaus@student.42.fr>          +#+  +:+       +#+        */
+/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/12 17:52:08 by pguthaus          #+#    #+#             */
-/*   Updated: 2020/01/07 16:43:10 by pguthaus         ###   ########.fr       */
+/*   Updated: 2020/04/17 18:34:56 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,26 +32,28 @@ static void			init_world(t_carry *c)
 
 static void			init_state(t_carry *c)
 {
-	t_state			state;
+	t_state			*state;
 
-	state.cam = 0;
-	state.image = 0;
-	state.savemode = false;
-	state.mlx_ptr = 0;
-	state.win_ptr = 0;
-	state.img_ptr = 0;
-	state.bits_per_pixel = 42;
-	state.size_line = 0;
+	if (!(state = malloc(sizeof(t_state))))
+		freexit(-42, "Allocation error", c);
+	state->cam = 0;
+	state->image = 0;
+	state->savemode = false;
+	state->mlx_ptr = 0;
+	state->win_ptr = 0;
+	state->img_ptr = 0;
+	state->bits_per_pixel = 42;
+	state->size_line = 0;
 	c->s = state;
 }
 
 static void			create_buffer(t_carry *c)
 {
-	if (!(c->s.image = malloc(sizeof(uint8_t)
+	if (!(c->s->image = malloc(sizeof(uint8_t)
 			* (3 * c->w->res[0] * c->w->res[1]))))
 		freexit(-42, "Allocation failed", c);
-	c->s.bits_per_pixel = sizeof(uint8_t) * 8 * 3;
-	c->s.size_line = c->w->res[0] * 8;
+	c->s->bits_per_pixel = sizeof(uint8_t) * 8 * 3;
+	c->s->size_line = c->w->res[0] * 8;
 }
 
 static void			validate_args(const t_args *args, char **filename,
@@ -85,22 +87,24 @@ static void			validate_args(const t_args *args, char **filename,
 
 int					main(int argc, char **argv)
 {
-	const t_args	*args = ft_args_start(argc, argv);
+	t_args			*args;
 	char			*file_name;
 	t_carry			*c;
 
+	if (!(args = ft_args_start(argc, argv)))
+		freexit(-42, "Args parsing error", 0);
 	if (!(c = malloc(sizeof(t_carry))))
 		freexit(-42, "Allocation error", 0);
 	init_state(c);
 	init_world(c);
-	validate_args(args, &file_name, &c->s.savemode);
+	validate_args(args, &file_name, &(c->s->savemode));
 	load_world(file_name, c);
-	if (!c->s.savemode)
+	if (!c->s->savemode)
 		init_window(c);
 	else
 		create_buffer(c);
 	render(c);
 	do_output(c);
-	ft_args_end((t_args **)&args);
+	ft_args_end(&args);
 	freexit(0, 0, c);
 }

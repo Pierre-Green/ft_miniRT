@@ -7,7 +7,7 @@ HT				=			Linux
 NAME			=			minirt
 DEV_NAME		=			minirt_dev
 LIBFT			=			libft/libft.a
-MLX_ARGS		=			minilibx/libmlx.a -lXext -lX11 -lm -lbsd -mcmodel=large
+MLX_ARGS		=			minilibx/libmlx.a -lXext -lX11 -lm
 
 # Srcs
 SRCFILE			=			make/srcs.mk

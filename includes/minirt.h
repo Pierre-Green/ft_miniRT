@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minirt.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pguthaus <pguthaus@student.42.fr>          +#+  +:+       +#+        */
+/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/22 19:29:27 by pguthaus          #+#    #+#             */
-/*   Updated: 2020/01/07 16:48:49 by pguthaus         ###   ########.fr       */
+/*   Updated: 2020/04/17 18:33:37 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,16 @@
 # include "state.h"
 # include <mlx.h>
 # include <float.h>
+# include <math.h>
 # define USAGE "Usage: ./minirt [-save] file"
+#ifndef M_PI
+  #define M_PI 3.14159265358979323846
+#endif 
 
 typedef struct		s_carry
 {
 	t_world			*w;
-	t_state			s;
+	t_state			*s;
 }					t_carry;
 
 void				load_world(const char *file, t_carry *c);

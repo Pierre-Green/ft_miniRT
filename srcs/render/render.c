@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pguthaus <pguthaus@student.42.fr>          +#+  +:+       +#+        */
+/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/26 04:23:58 by pguthaus          #+#    #+#             */
-/*   Updated: 2020/01/07 16:49:54 by pguthaus         ###   ########.fr       */
+/*   Updated: 2020/04/17 18:33:47 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,16 +14,16 @@
 
 static void			set_pixel(unsigned int pos, t_color color, t_carry *c)
 {
-	c->s.image[pos] = ft_color_get_b(color);
-	c->s.image[pos + 1] = ft_color_get_g(color);
-	c->s.image[pos + 2] = ft_color_get_r(color);
+	c->s->image[pos] = ft_color_get_b(color);
+	c->s->image[pos + 1] = ft_color_get_g(color);
+	c->s->image[pos + 2] = ft_color_get_r(color);
 }
 
 t_vec3f				c2w(t_vec3f vec, t_carry *c)
 {
 	t_vec3f			res;
 	float			c2w[4][4];
-	const t_camera	*camera = c->w->cameras[c->s.cam];
+	const t_camera	*camera = c->w->cameras[c->s->cam];
 
 	c2w[0][0] = camera->right.x;
 	c2w[0][1] = camera->right.y;
@@ -63,7 +63,7 @@ void				render(t_carry *c)
 	t_color			pixel;
 	t_vec3f			origin;
 
-	origin = c->w->cameras[c->s.cam]->position;
+	origin = c->w->cameras[c->s->cam]->position;
 	y = 0;
 	while (y < c->w->res[1])
 	{
@@ -71,7 +71,7 @@ void				render(t_carry *c)
 		while (x < c->w->res[0])
 		{
 			pixel = trace(origin, get_raydir(x, y, c), c);
-			pos = (((y * c->s.size_line) + (x * (c->s.bits_per_pixel / 8))));
+			pos = (((y * c->s->size_line) + (x * (c->s->bits_per_pixel / 8))));
 			set_pixel(pos, pixel, c);
 			x++;
 		}

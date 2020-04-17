@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   light.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pguthaus <pguthaus@student.42.fr>          +#+  +:+       +#+        */
+/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/17 06:41:47 by pguthaus          #+#    #+#             */
-/*   Updated: 2020/01/06 19:37:07 by pguthaus         ###   ########.fr       */
+/*   Updated: 2020/04/17 18:44:37 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,8 @@ void					parse_light(char *line, t_carry *c)
 	t_light				*lights[c->w->lights_count];
 	unsigned int		i;
 
-	results = parse_line_specs(line, (t_line_spec *)specs, 1, c);
+	if (!(results = parse_line_specs(line, (t_line_spec *)specs, 1, c)))
+		freexit(-42, "Allocation error", c);
 	i = 0;
 	while (i < c->w->lights_count && (lights[i] = c->w->lights[i]))
 		i++;
@@ -36,4 +37,5 @@ void					parse_light(char *line, t_carry *c)
 	c->w->lights[i]->dry_wet = results[1].f;
 	c->w->lights[i]->color = results[2].color;
 	c->w->lights_count++;
+	free((void *)results);
 }

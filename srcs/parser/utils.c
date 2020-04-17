@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pguthaus <pguthaus@student.42.fr>          +#+  +:+       +#+        */
+/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/22 20:20:04 by pguthaus          #+#    #+#             */
-/*   Updated: 2020/01/06 19:34:26 by pguthaus         ###   ########.fr       */
+/*   Updated: 2020/04/17 18:41:52 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,9 +89,11 @@ static t_vec3f				parse_vec3f(char *line, unsigned int *pos,
 t_line_result				*parse_line_specs(char *line, t_line_spec *specs,
 	unsigned int pos, t_carry *c)
 {
-	static t_line_result	results[SPEC_MAX];
+	t_line_result			*results;
 	uint8_t					i;
 
+	if (!(results = malloc(SPEC_MAX * sizeof(t_line_result))))
+		return (NULL);
 	i = 0;
 	while (specs[i] && i < SPEC_MAX)
 	{

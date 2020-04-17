@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   camera.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pguthaus <pguthaus@student.42.fr>          +#+  +:+       +#+        */
+/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/12/17 06:44:58 by pguthaus          #+#    #+#             */
-/*   Updated: 2020/01/06 19:35:58 by pguthaus         ###   ########.fr       */
+/*   Updated: 2020/04/17 18:43:16 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,8 @@ void					parse_camera(char *line, t_carry *c)
 	t_camera			*cams[c->w->cameras_count];
 	unsigned int		i;
 
-	results = parse_line_specs(line, (t_line_spec *)specs, 1, c);
+	if (!(results = parse_line_specs(line, (t_line_spec *)specs, 1, c)))
+		freexit(-42, "Allocation error", c);
 	i = 0;
 	while (i < c->w->cameras_count && (cams[i] = c->w->cameras[i]))
 		i++;
@@ -37,4 +38,5 @@ void					parse_camera(char *line, t_carry *c)
 	c->w->cameras[i]->right = ft_vec3f_cross(results[1].vec3f, ft_vec3f_init(0, 1, 0));
 	c->w->cameras[i]->up = ft_vec3f_cross(results[1].vec3f, c->w->cameras[i]->right);
 	c->w->cameras_count++;
+	free((void *)results);
 }

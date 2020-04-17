@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   window.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pguthaus <pguthaus@student.42.fr>          +#+  +:+       +#+        */
+/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/26 03:12:31 by pguthaus          #+#    #+#             */
-/*   Updated: 2020/01/07 16:46:11 by pguthaus         ###   ########.fr       */
+/*   Updated: 2020/04/17 18:30:41 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,8 +82,8 @@ static void				on_key_pressed(int key, void *p_c)
 
 void					init_window(t_carry *c)
 {
-	c->s.mlx_ptr = mlx_init();
-	c->s.win_ptr = mlx_new_window(c->s.mlx_ptr, c->w->res[0], c->w->res[1], "MiniRT");
-	c->s.img_ptr = mlx_new_image(c->s.mlx_ptr, c->w->res[0], c->w->res[1]);
-	c->s.image = mlx_get_data_addr(c->s.img_ptr, &c->s.bits_per_pixel, &c->s.size_line, &c->s.endian);
+	c->s->mlx_ptr = mlx_init();
+	c->s->win_ptr = mlx_new_window(c->s->mlx_ptr, c->w->res[0], c->w->res[1], "MiniRT");
+	c->s->img_ptr = mlx_new_image(c->s->mlx_ptr, c->w->res[0], c->w->res[1]);
+	c->s->image = mlx_get_data_addr(c->s->img_ptr, &(c->s->bits_per_pixel), &(c->s->size_line), &(c->s->endian));
 }

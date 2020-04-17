@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   world.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pguthaus <pguthaus@student.42.fr>          +#+  +:+       +#+        */
+/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/12 19:21:23 by pguthaus          #+#    #+#             */
-/*   Updated: 2020/01/06 19:42:38 by pguthaus         ###   ########.fr       */
+/*   Updated: 2020/04/17 18:14:03 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,7 +111,7 @@ typedef struct		s_obj
 }					t_obj;
 typedef struct		s_world
 {
-	uint16_t		res[2];
+	unsigned int	res[2];
 	t_ambiant_light	*ambiant_light;
 	t_camera		**cameras;
 	size_t			cameras_count;

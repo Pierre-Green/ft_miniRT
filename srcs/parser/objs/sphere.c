@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sphere.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pguthaus <pguthaus@student.42.fr>          +#+  +:+       +#+        */
+/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/29 02:22:06 by pguthaus          #+#    #+#             */
-/*   Updated: 2020/01/06 19:41:15 by pguthaus         ###   ########.fr       */
+/*   Updated: 2020/04/17 18:46:30 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,13 +16,15 @@
 void					parse_sphere(char *line, t_carry *c)
 {
 	const t_line_spec	specs[4] = { VEC3F, FLOAT, COLOR, NONE };
-	t_line_result		*res;
+	t_line_result		*results;
 	t_obj				*obj;
 
-	res = parse_line_specs(line, (t_line_spec *)specs, 2, c);
+	if (!(results = parse_line_specs(line, (t_line_spec *)specs, 2, c)))
+		freexit(-42, "Allocation error", c);
 	if (!(obj = malloc(sizeof(t_obj))))
 		freexit(-42, "Allocation failed", c);
 	obj->type = SPHERE;
-	obj->obj.sphere = (t_sphere){ res[0].vec3f, res[1].f, res[2].color };
+	obj->obj.sphere = (t_sphere){ results[0].vec3f, results[1].f, results[2].color };
 	add_obj(obj, c);
+	free((void *)results);
 }
