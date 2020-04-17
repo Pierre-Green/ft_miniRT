@@ -3,16 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pguthaus <pguthaus@student.42.fr>          +#+  +:+       +#+        */
+/*   By: pguthaus <pguthaus@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/26 00:54:57 by pguthaus          #+#    #+#             */
-/*   Updated: 2019/11/29 05:10:08 by pguthaus         ###   ########.fr       */
+/*   Updated: 2020/04/17 23:50:18 by pguthaus           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef GET_NEXT_LINE_H
 # define GET_NEXT_LINE_H
 # include "libft.h"
+# include <limits.h>
 
 typedef struct		s_buff
 {
