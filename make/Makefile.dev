@@ -13,7 +13,7 @@ O_FILES			=			$(addprefix $(O_DIR), $(SRCS:.c=.o))
 all: $(NAME)
 
 $(NAME): $(LFT_O_FILES) $(O_FILES)
-	$(CC) -o $(DEV_NAME) $(LFT_O_FILES) $(O_FILES) $(MLX_ARGS) 
+	$(CC) -o $(DEV_NAME) -g $(LFT_O_FILES) $(O_FILES) $(MLX_ARGS) 
 
 $(LFT_O_DIR)%.o: ./libft/src/%.c
 	@if [ ! -d $(dir $@) ]; then mkdir -p $(dir $@); fi

@@ -1,13 +1,12 @@
 # Compilation
 CC				=			gcc
 CFLAGS			=			-Wall -Wextra -Werror -Iincludes -I./minilibx -Ilibft/includes
-HT				=			Linux
+MLX_ARGS		=			minilibx/libmlx.a -lXext -lX11 -lm
 
 # Output names
 NAME			=			minirt
 DEV_NAME		=			minirt_dev
 LIBFT			=			libft/libft.a
-MLX_ARGS		=			minilibx/libmlx.a -lXext -lX11 -lm
 
 # Srcs
 SRCFILE			=			make/srcs.mk
