@@ -2,7 +2,11 @@ include make/config.mk
 
 all: $(NAME)
 
-$(NAME): bin
+$(NAME): mlx bin
+
+mlx:
+	@echo "Making mlx"
+	@cd minilibx && ./configure
 
 bin:
 	@echo "Making ./$(NAME)..."
