@@ -6,7 +6,7 @@
 /*   By: pguthaus <pguthaus@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/26 17:23:56 by pguthaus          #+#    #+#             */
-/*   Updated: 2020/01/06 19:57:41 by pguthaus         ###   ########.fr       */
+/*   Updated: 2020/04/18 02:10:21 by pguthaus         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,9 +114,9 @@ t_color				trace(t_vec3f origin, t_vec3f raydir, t_carry *c)
 		}
 
 		// Apply light
-		color = ft_color_set_r(color, MIN(255, ft_color_get_r(color) + transmission * MAX(0, ft_vec3f_dot(next_ray.ray_dir, light_direction)) * ft_color_get_r(c->w->lights[k]->color)));
-		color = ft_color_set_g(color, MIN(255, ft_color_get_g(color) + transmission * MAX(0, ft_vec3f_dot(next_ray.ray_dir, light_direction)) * ft_color_get_g(c->w->lights[k]->color)));
-		color = ft_color_set_b(color, MIN(255, ft_color_get_b(color) + transmission * MAX(0, ft_vec3f_dot(next_ray.ray_dir, light_direction)) * ft_color_get_b(c->w->lights[k]->color)));
+		color = ft_color_set_r(color, ft_min(255, ft_color_get_r(color) + transmission * ft_max(0, ft_vec3f_dot(next_ray.ray_dir, light_direction)) * ft_color_get_r(c->w->lights[k]->color)));
+		color = ft_color_set_g(color, ft_min(255, ft_color_get_g(color) + transmission * ft_max(0, ft_vec3f_dot(next_ray.ray_dir, light_direction)) * ft_color_get_g(c->w->lights[k]->color)));
+		color = ft_color_set_b(color, ft_min(255, ft_color_get_b(color) + transmission * ft_max(0, ft_vec3f_dot(next_ray.ray_dir, light_direction)) * ft_color_get_b(c->w->lights[k]->color)));
 		k++;
 	}
 	return (color);
