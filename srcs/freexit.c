@@ -36,8 +36,14 @@ static void			free_world(t_world *world)
 
 static void			free_state(t_state *state)
 {
-	mlx_destroy_image(state->mlx_ptr, state->img_ptr);
-	mlx_destroy_window(state->mlx_ptr, state->win_ptr);
+	if (!state->savemode)
+	{
+		if (state->img_ptr)
+			mlx_destroy_image(state->mlx_ptr, state->img_ptr);
+		if (state->win_ptr)
+			mlx_destroy_window(state->mlx_ptr, state->win_ptr);
+	}
+	free((void *)state);
 }
 
 void				freexit(int exit_code, const char *message, t_carry *c)

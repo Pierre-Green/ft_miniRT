@@ -6,7 +6,7 @@
 /*   By: pguthaus <pguthaus@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/26 03:12:31 by pguthaus          #+#    #+#             */
-/*   Updated: 2020/04/18 01:37:49 by pguthaus         ###   ########.fr       */
+/*   Updated: 2020/04/20 17:35:35 by pguthaus         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,6 @@ static int					on_key_pressed(int key, void *p_c)
 {
 	const t_carry		*c = (t_carry *)p_c;
 
-	ft_printf("Key pressed: %d\n", key);
 	if (key == KEY_ESC)
 	{
 		mlx_destroy_image(c->s->mlx_ptr, c->s->img_ptr);

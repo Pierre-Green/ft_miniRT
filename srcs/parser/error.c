@@ -6,7 +6,7 @@
 /*   By: pguthaus <pguthaus@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/26 00:44:34 by pguthaus          #+#    #+#             */
-/*   Updated: 2020/01/06 19:32:30 by pguthaus         ###   ########.fr       */
+/*   Updated: 2020/04/21 14:11:12 by pguthaus         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,8 @@ static char		tab_to_space(unsigned int i, char c)
 
 void			parse_error(char *line, unsigned int pos, const char *message, t_carry *c)
 {
-	ft_printf("\nError in line: '%s'\n", ft_strmapi(line, tab_to_space));
-	ft_printf("%*s %s\n", pos + 16, "↑", message);
+	ft_printf("World's file not well formated:\n\n");
+	ft_printf("Error in line: '%s'\n", ft_strmapi(line, tab_to_space));
+	ft_printf("%*s %s\n\n", pos + 16, "↑", message);
 	freexit(-1, 0, c);
 }

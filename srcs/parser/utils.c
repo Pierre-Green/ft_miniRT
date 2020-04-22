@@ -72,14 +72,14 @@ static t_vec3f				parse_vec3f(char *line, unsigned int *pos,
 	while (i < 3)
 	{
 		if (!ft_isdigit(line[*pos]) && line[*pos] != '-' && line[*pos] != '.')
-			parse_error(line, *pos, "Vec error", c);
+			parse_error(line, *pos, "Vec error, should be formatted like this: 0.5,-3.4,5.4", c);
 		tmp[i] = ft_atof(&line[*pos]);
 		if (normalized && (tmp[i] < -1.0f || tmp[i] > 1.0f))
 			parse_error(line, *pos, "Vec shoul be normalized", c);
 		while (ft_isdigit(line[*pos]) || line[*pos] == '-' || line[*pos] == '.')
 			(*pos)++;
 		if (line[*pos] != ',' && i != 2)
-			parse_error(line, *pos, "Vec error", c);
+			parse_error(line, *pos, "Vec error, don't put a space before a coma", c);
 		(*pos)++;
 		i++;
 	}
