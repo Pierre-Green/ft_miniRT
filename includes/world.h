@@ -37,8 +37,7 @@ typedef struct		s_camera
 {
 	t_vec3f			position;
 	t_vec3f			forward;
-	t_vec3f			right;
-	t_vec3f			up;
+	int				fov;
 }					t_camera;
 /*
 ** Objects

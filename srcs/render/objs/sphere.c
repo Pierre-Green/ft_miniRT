@@ -6,12 +6,50 @@
 /*   By: pguthaus <pguthaus@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/29 02:22:06 by pguthaus          #+#    #+#             */
-/*   Updated: 2019/12/05 03:06:08 by pguthaus         ###   ########.fr       */
+/*   Updated: 2020/04/24 22:11:42 by pguthaus         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "world.h"
 
+t_bool			sphere_intersects(t_sphere sphere, t_vec3f origin, t_vec3f dir, float *dist)
+{
+	float		discriminant;
+	float		k[2];
+	float		t[2];
+	t_vec3f		difference;
+
+/*
+	if (!object->prev_origin || !is_equal(object->prev_origin, &origin))
+	{
+		if (object->difference)
+			free(object->difference);
+		if (object->prev_origin)
+			free(object->prev_origin);
+		object->difference = subtract_vectors(origin, *object->center);
+		object->calcul_c = product_vectors(*object->difference,
+*object->difference) - (object->radius * object->radius);
+		object->prev_origin = cpy_vector(&origin);
+	}
+	*/
+
+	difference = ft_vec3f_sub(origin, sphere.position);
+	k[0] = ft_vec3f_dot(dir, dir);
+	k[1] = 2 * ft_vec3f_dot(difference, dir);
+	discriminant = k[1] * k[1] - 4 * k[0]
+		* ft_vec3f_dot(difference, difference) - (sphere.diameter / 2 * sphere.diameter / 2);
+	if (discriminant < 0)
+		return (false);
+	t[0] = (-k[1] + sqrt(discriminant)) / (2 * k[0]);
+	t[1] = (-k[1] - sqrt(discriminant)) / (2 * k[0]);
+	if (t[0] < t[1])
+		*dist = t[0];
+	else
+		*dist = t[1];
+	return (true);
+}
+
+/*
 t_bool				sphere_intersects(t_sphere sphere, t_vec3f origin, t_vec3f dir, float *dist)
 {
 	const t_vec3f	l = ft_vec3f_sub(sphere.position, origin);
@@ -45,6 +83,7 @@ t_bool				sphere_intersects(t_sphere sphere, t_vec3f origin, t_vec3f dir, float 
 	*dist = t0;
 	return (true);
 }
+*/
 
 t_second_ray		sphere_second_ray(t_sphere sphere, t_vec3f origin, t_vec3f dir, float dist)
 {

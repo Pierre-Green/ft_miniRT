@@ -6,7 +6,7 @@
 /*   By: pguthaus <pguthaus@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/12 19:49:16 by pguthaus          #+#    #+#             */
-/*   Updated: 2020/04/21 14:10:19 by pguthaus         ###   ########.fr       */
+/*   Updated: 2020/04/24 21:24:05 by pguthaus         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,13 +44,15 @@ static void			parse(int fd, t_carry *c)
 	char			*line;
 	int				ret;
 
-	while ((ret = get_next_line(fd, &line)))
+	while ((ret = get_next_line(fd, &line)) != -1)
 	{
-		if (ret == -1)
-			freexit(43, "Error while reading file.", c);
+		if (ret == 0 && line[0] == 0)
+			break ;
 		line_router(line, c);
 		free(line);
 	}
+	if (ret == -1)
+		freexit(43, "Error while reading file.", c);
 	if (line)
 		free((void *)line);
 	if (c->w->res[0] == 0 || c->w->res[1] == 0)

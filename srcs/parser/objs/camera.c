@@ -15,7 +15,7 @@
 
 void					parse_camera(char *line, t_carry *c)
 {
-	const t_line_spec	specs[3] = { VEC3F, NVEC3F, NONE };
+	const t_line_spec	specs[4] = { VEC3F, NVEC3F, INT, NONE };
 	t_line_result		*results;
 	t_camera			*cams[c->w->cameras_count];
 	unsigned int		i;
@@ -35,8 +35,7 @@ void					parse_camera(char *line, t_carry *c)
 		freexit(-42, "Allocation failed", c);
 	c->w->cameras[i]->position = results[0].vec3f;
 	c->w->cameras[i]->forward = results[1].vec3f;
-	c->w->cameras[i]->right = ft_vec3f_cross(results[1].vec3f, ft_vec3f_init(0, 1, 0));
-	c->w->cameras[i]->up = ft_vec3f_cross(results[1].vec3f, c->w->cameras[i]->right);
+	c->w->cameras[i]->fov = results[2].i;
 	c->w->cameras_count++;
 	free((void *)results);
 }

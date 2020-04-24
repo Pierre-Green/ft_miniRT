@@ -6,13 +6,11 @@
 /*   By: pguthaus <pguthaus@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/26 03:12:31 by pguthaus          #+#    #+#             */
-/*   Updated: 2020/04/20 17:35:35 by pguthaus         ###   ########.fr       */
+/*   Updated: 2020/04/24 21:57:33 by pguthaus         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
-#define POSITION_VEL 0.5
-#define ORIENTATION_VEL 0.1
 
 static void				move(int key, t_carry *c)
 {
@@ -20,13 +18,13 @@ static void				move(int key, t_carry *c)
 
 	cam = c->w->cameras[c->s->cam];
 	if (key == KEY_W)
-		cam->position = ft_vec3f_add(cam->position, ft_vec3f_mul(cam->forward, POSITION_VEL));
+		cam->position.z += 0.5;
 	else if (key == KEY_A)
-		cam->position = ft_vec3f_sub(cam->position, ft_vec3f_mul(cam->right, POSITION_VEL));
+		cam->position.x -= 0.5;
 	else if (key == KEY_S)
-		cam->position = ft_vec3f_sub(cam->position, ft_vec3f_mul(cam->forward, POSITION_VEL));
+		cam->position.z -= 0.5;
 	else if (key == KEY_D)
-		cam->position = ft_vec3f_add(cam->position, ft_vec3f_mul(cam->right, POSITION_VEL));
+		cam->position.x += 0.5;
 }
 
 static void				rotate(int key, t_carry *c)
@@ -35,15 +33,13 @@ static void				rotate(int key, t_carry *c)
 
 	cam = c->w->cameras[c->s->cam];
 	if (key == KEY_ARROW_DOWN)
-		cam->forward = ft_vec3f_sub(cam->forward, ft_vec3f_init(0, ORIENTATION_VEL, 0));
+		cam->forward.x -= 0.1;
 	if (key == KEY_ARROW_UP)
-		cam->forward = ft_vec3f_add(cam->forward, ft_vec3f_init(0, ORIENTATION_VEL, 0));
+		cam->forward.x += 0.1;
 	if (key == KEY_ARROW_LEFT)
-		cam->forward = ft_vec3f_sub(cam->forward, ft_vec3f_init(0, 0, ORIENTATION_VEL));
+		cam->forward.y -= 0.1;
 	if (key == KEY_ARROW_RIGHT)
-		cam->forward = ft_vec3f_add(cam->forward, ft_vec3f_init(0, 0, ORIENTATION_VEL));
-	cam->right = ft_vec3f_cross(cam->forward, ft_vec3f_init(0, 1, 0));
-	cam->up = ft_vec3f_cross(cam->forward, cam->right);
+		cam->forward.y += 0.1;
 }
 
 static void				next_cam(t_carry *c)

@@ -19,31 +19,34 @@ static void			set_pixel(unsigned int pos, t_color color, t_carry *c)
 	c->s->image[pos + 2] = ft_color_get_r(color);
 }
 
-t_vec3f				c2w(t_vec3f vec, t_carry *c)
-{
-	t_vec3f			res;
-	float			c2w[4][4];
-	const t_camera	*camera = c->w->cameras[c->s->cam];
-
-	c2w[0][0] = camera->right.x;
-	c2w[0][1] = camera->right.y;
-	c2w[0][2] = camera->right.z;
-	c2w[1][0] = camera->up.x;
-	c2w[1][1] = camera->up.y;
-	c2w[1][2] = camera->up.z;
-	c2w[2][0] = camera->forward.x;
-	c2w[2][1] = camera->forward.y;
-	c2w[2][2] = camera->forward.z;
-
-	res.x = vec.x * c2w[0][0] + vec.y * c2w[1][0] + vec.z * c2w[2][0];
-	res.y = vec.x * c2w[0][1] + vec.y * c2w[1][1] + vec.z * c2w[2][1];
-	res.z = vec.x * c2w[0][2] + vec.y * c2w[1][2] + vec.z * c2w[2][2];
-	return (res);
-}
-
-static t_vec3f		get_raydir(unsigned int x, unsigned int y, t_carry *c)
+// TODO FIX IT
+static t_vec3f		get_raydir(int x, int y, t_carry *c)
 {
 	t_vec3f			vec;
+	float			width;
+	float			height;
+	float			scale;
+
+	x = -(c->w->res[0] / 2) + 1 + x;
+	y = -(c->w->res[1] / 2) + 1 + y;
+
+	width = 1;
+	height = 1;
+	if (c->w->res[0] >= c->w->res[1])
+		width = (float)c->w->res[0] / c->w->res[1];
+	else
+		height = (float)c->w->res[1] / c->w->res[0];
+
+	scale = tanf(M_PI * 0.5 * c->w->cameras[c->s->cam]->fov / 180);
+
+	vec = ft_vec3f_init(
+		x * (width / c->w->res[0]) * scale,
+		y * (height / c->w->res[1]) * scale,
+		1
+	);
+
+	return (ft_vec3f_rot(vec, c->w->cameras[c->s->cam]->forward));
+	/*
 	float			scale;
 	float			aspect_ratio;
 
@@ -53,6 +56,7 @@ static t_vec3f		get_raydir(unsigned int x, unsigned int y, t_carry *c)
 							(1 - 2 * (y + 0.5) / (float)c->w->res[1]) * scale,
 							1), c);
 	return (ft_vec3f_normalize(vec));
+	*/
 }
 
 void				render(t_carry *c)
