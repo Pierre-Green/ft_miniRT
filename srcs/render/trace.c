@@ -6,7 +6,7 @@
 /*   By: pguthaus <pguthaus@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/26 17:23:56 by pguthaus          #+#    #+#             */
-/*   Updated: 2020/04/18 02:10:21 by pguthaus         ###   ########.fr       */
+/*   Updated: 2020/04/28 17:01:10 by pguthaus         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,11 +89,14 @@ t_color				trace(t_vec3f origin, t_vec3f raydir, t_carry *c)
 	t_color			color;
 	unsigned int	k;
 	unsigned int	j;
+	float			light_power;
 
+	// Apply ambiant light
 	color = get_hitted_color(hitted);
 	color = ft_color_set_r(color, ft_color_get_r(color) * (ft_color_get_r(c->w->ambiant_light->color) / 255.0f) * c->w->ambiant_light->ratio);
 	color = ft_color_set_g(color, ft_color_get_g(color) * (ft_color_get_g(c->w->ambiant_light->color) / 255.0f) * c->w->ambiant_light->ratio);
 	color = ft_color_set_b(color, ft_color_get_b(color) * (ft_color_get_b(c->w->ambiant_light->color) / 255.0f) * c->w->ambiant_light->ratio);
+	
 	k = 0;
 	while (k < c->w->lights_count)
 	{
@@ -114,9 +117,16 @@ t_color				trace(t_vec3f origin, t_vec3f raydir, t_carry *c)
 		}
 
 		// Apply light
-		color = ft_color_set_r(color, ft_min(255, ft_color_get_r(color) + transmission * ft_max(0, ft_vec3f_dot(next_ray.ray_dir, light_direction)) * ft_color_get_r(c->w->lights[k]->color)));
-		color = ft_color_set_g(color, ft_min(255, ft_color_get_g(color) + transmission * ft_max(0, ft_vec3f_dot(next_ray.ray_dir, light_direction)) * ft_color_get_g(c->w->lights[k]->color)));
-		color = ft_color_set_b(color, ft_min(255, ft_color_get_b(color) + transmission * ft_max(0, ft_vec3f_dot(next_ray.ray_dir, light_direction)) * ft_color_get_b(c->w->lights[k]->color)));
+		if (transmission)
+		{
+			light_power = ft_vec3f_dot(next_ray.ray_dir, light_direction);
+			if (light_power > 0)
+			{
+				color = ft_color_set_r(color, ft_min(255, ft_color_get_r(color) + (light_power * ft_color_get_r(c->w->lights[k]->color))));
+				color = ft_color_set_g(color, ft_min(255, ft_color_get_g(color) + (light_power * ft_color_get_g(c->w->lights[k]->color))));
+				color = ft_color_set_b(color, ft_min(255, ft_color_get_b(color) + (light_power * ft_color_get_b(c->w->lights[k]->color))));	
+			}
+		}
 		k++;
 	}
 	return (color);
