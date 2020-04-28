@@ -6,7 +6,7 @@
 /*   By: pguthaus <pguthaus@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/26 17:23:56 by pguthaus          #+#    #+#             */
-/*   Updated: 2020/04/28 17:01:10 by pguthaus         ###   ########.fr       */
+/*   Updated: 2020/04/28 21:16:09 by pguthaus         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,11 +71,14 @@ t_color				trace(t_vec3f origin, t_vec3f raydir, t_carry *c)
 	while (i < c->w->objs_count)
 	{
 		distance = FLT_MAX;
-		if (intersects(c->w->objs[i], origin, raydir, &distance) && distance < nearest)
+		if (intersects(c->w->objs[i], origin, raydir, &distance))
 		{
-			hitted = c->w->objs[i];
-			nearest = distance;
-			break ;
+			if (distance > 1e-4 && distance < nearest)
+			{
+				hitted = c->w->objs[i];
+				nearest = distance;
+				break ;
+			}
 		}
 		i++;
 	}
