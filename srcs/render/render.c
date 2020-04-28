@@ -45,17 +45,7 @@ static t_vec3f		get_raydir(int x, int y, t_carry *c)
 	);
 
 	return (ft_vec3f_rot(vec, c->w->cameras[c->s->cam]->forward));
-	/*
-	float			scale;
-	float			aspect_ratio;
 
-	scale = tanf(M_PI * 0.5 * 70 / 180);
-	aspect_ratio = c->w->res[0] / (float) c->w->res[1];
-	vec = c2w(ft_vec3f_init((	2 * (x + 0.5) / (float)c->w->res[0] - 1) * scale * aspect_ratio,
-							(1 - 2 * (y + 0.5) / (float)c->w->res[1]) * scale,
-							1), c);
-	return (ft_vec3f_normalize(vec));
-	*/
 }
 
 void				render(t_carry *c)
@@ -74,7 +64,7 @@ void				render(t_carry *c)
 		while (x < c->w->res[0])
 		{
 			pixel = trace(origin, get_raydir(x, y, c), c);
-			pos = (((y * c->s->size_line) + (x * (c->s->bits_per_pixel / 8))));
+			pos = ((((c->w->res[1] - y) * c->s->size_line) + (x * (c->s->bits_per_pixel / 8))));
 			set_pixel(pos, pixel, c);
 			x++;
 		}
