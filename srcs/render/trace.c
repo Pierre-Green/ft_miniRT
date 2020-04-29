@@ -6,7 +6,7 @@
 /*   By: pguthaus <pguthaus@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/26 17:23:56 by pguthaus          #+#    #+#             */
-/*   Updated: 2020/04/28 21:16:09 by pguthaus         ###   ########.fr       */
+/*   Updated: 2020/04/29 14:36:29 by pguthaus         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,7 +110,7 @@ t_color				trace(t_vec3f origin, t_vec3f raydir, t_carry *c)
 		{
 			if (j != i)
 			{
-				if (intersects(c->w->objs[j], ft_vec3f_add(next_ray.hit_point, ft_vec3f_mul(next_ray.ray_dir, 1e-4)), light_direction, &distance))
+				if (intersects(c->w->objs[j], next_ray.hit_point, light_direction, &distance) && distance < 0)
 				{
 					transmission = 0;
 					break ;
