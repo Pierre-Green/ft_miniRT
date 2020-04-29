@@ -6,7 +6,7 @@
 /*   By: pguthaus <pguthaus@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/26 17:23:56 by pguthaus          #+#    #+#             */
-/*   Updated: 2020/04/29 14:36:29 by pguthaus         ###   ########.fr       */
+/*   Updated: 2020/04/29 15:33:57 by pguthaus         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,7 @@ t_color				trace(t_vec3f origin, t_vec3f raydir, t_carry *c)
 	while (k < c->w->lights_count)
 	{
 		transmission = 1;
-		light_direction = ft_vec3f_normalize(ft_vec3f_sub(c->w->lights[k]->position, next_ray.hit_point));
+		light_direction = ft_vec3f_normalize(ft_vec3f_sub(next_ray.hit_point, c->w->lights[k]->position));
 		j = 0;
 		while (j < c->w->objs_count)
 		{
