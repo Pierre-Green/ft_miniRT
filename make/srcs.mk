@@ -1,4 +1,5 @@
 SRCS+=render/trace.c
+SRCS+=render/objs/camera.c
 SRCS+=render/objs/triangle.c
 SRCS+=render/objs/sphere.c
 SRCS+=render/objs/cylinder.c

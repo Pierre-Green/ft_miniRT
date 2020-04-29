@@ -42,7 +42,7 @@ static t_vec3f		get_raydir(int x, int y, t_carry *c)
 		1
 	);
 
-	return (ft_vec3f_rot(vec, c->w->cameras[c->s->cam]->forward));
+	return (ft_vec3f_rot(vec, c->w->cameras[c->s->cam]->rotation));
 
 }
 

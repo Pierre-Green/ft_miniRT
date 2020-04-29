@@ -36,9 +36,13 @@ typedef struct		s_ambiant_light
 typedef struct		s_camera
 {
 	t_vec3f			position;
+	t_vec3f			rotation;
 	t_vec3f			forward;
+	t_vec3f			right;
+	t_vec3f			up;
 	int				fov;
 }					t_camera;
+void				set_camera_axes(t_camera *cam);
 /*
 ** Objects
 */
