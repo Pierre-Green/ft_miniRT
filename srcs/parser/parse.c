@@ -6,7 +6,7 @@
 /*   By: pguthaus <pguthaus@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/12 19:49:16 by pguthaus          #+#    #+#             */
-/*   Updated: 2020/04/24 21:24:05 by pguthaus         ###   ########.fr       */
+/*   Updated: 2020/04/30 22:16:29 by pguthaus         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@
 
 static void			line_router(char *line, t_carry *c)
 {
+	if (line[0] == '#')
+		return ;
 	if (line[0] == 'R' && ft_isspace(line[1]))
 		parse_resolution(line, c);
 	else if (line[0] == 'A' && ft_isspace(line[1]))
