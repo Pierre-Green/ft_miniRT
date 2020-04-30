@@ -6,11 +6,12 @@
 /*   By: pguthaus <pguthaus@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/26 03:12:31 by pguthaus          #+#    #+#             */
-/*   Updated: 2020/04/29 16:19:41 by pguthaus         ###   ########.fr       */
+/*   Updated: 2020/04/30 22:48:37 by pguthaus         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
+#include <stdio.h>
 
 static void				move(int key, t_carry *c)
 {
@@ -37,13 +38,13 @@ static void				rotate(int key, t_carry *c)
 
 	cam = c->w->cameras[c->s->cam];
 	if (key == KEY_ARROW_DOWN)
-		cam->rotation.x -= 0.1;
+		cam->rotation.x -= 0.01;
 	if (key == KEY_ARROW_UP)
-		cam->rotation.x += 0.1;
+		cam->rotation.x += 0.01;
 	if (key == KEY_ARROW_LEFT)
-		cam->rotation.y -= 0.1;
+		cam->rotation.y -= 0.01;
 	if (key == KEY_ARROW_RIGHT)
-		cam->rotation.y += 0.1;
+		cam->rotation.y += 0.01;
 	set_camera_axes(cam);
 }
 

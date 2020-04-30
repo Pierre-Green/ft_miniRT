@@ -22,7 +22,8 @@ static void			set_pixel(unsigned int pos, t_color color, t_carry *c)
 // TODO FIX IT
 static t_vec3f		get_raydir(int x, int y, t_carry *c)
 {
-	t_vec3f			vec;
+	t_vec3f			dir;
+	t_vec3f			angles;
 	float			width;
 	float			height;
 
@@ -36,13 +37,21 @@ static t_vec3f		get_raydir(int x, int y, t_carry *c)
 	else
 		height = (float)c->w->res[1] / c->w->res[0];
 
-	vec = ft_vec3f_init(
+	dir = ft_vec3f_init(
 		x * (width / c->w->res[0]),
 		y * (height / c->w->res[1]),
 		1
 	);
 
-	return (ft_vec3f_rot(vec, c->w->cameras[c->s->cam]->rotation));
+	angles = ft_vec3f_mul(c->w->cameras[c->s->cam]->rotation, 360);
+	angles = ft_vec3f_init(
+		angles.x / 180 * M_PI,
+		angles.y / 180 * M_PI,
+		angles.z / 180 * M_PI
+	);
+
+
+	return (ft_vec3f_rot(dir, angles));
 
 }
 

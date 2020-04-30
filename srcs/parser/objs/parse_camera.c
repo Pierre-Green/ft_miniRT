@@ -35,6 +35,7 @@ void					parse_camera(char *line, t_carry *c)
 		freexit(-42, "Allocation failed", c);
 	c->w->cameras[i]->position = results[0].vec3f;
 	c->w->cameras[i]->rotation = results[1].vec3f;
+	c->w->cameras[i]->rotation.y *= -1;
 	c->w->cameras[i]->fov = results[2].i;
 	set_camera_axes(c->w->cameras[i]);
 	c->w->cameras_count++;
