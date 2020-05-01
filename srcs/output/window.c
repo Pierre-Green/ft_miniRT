@@ -6,12 +6,11 @@
 /*   By: pguthaus <pguthaus@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/26 03:12:31 by pguthaus          #+#    #+#             */
-/*   Updated: 2020/04/30 22:48:37 by pguthaus         ###   ########.fr       */
+/*   Updated: 2020/05/01 14:57:22 by pguthaus         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
-#include <stdio.h>
 
 static void				move(int key, t_carry *c)
 {
@@ -19,17 +18,17 @@ static void				move(int key, t_carry *c)
 
 	cam = c->w->cameras[c->s->cam];
 	if (key == KEY_W)
-		cam->position = ft_vec3f_add(cam->position, ft_vec3f_mul(cam->forward, 1));
+		cam->position = ft_vec3f_add(cam->position, ft_vec3f_mul(cam->forward, VELOCITY_MOVE));
 	else if (key == KEY_S)
-		cam->position = ft_vec3f_add(cam->position, ft_vec3f_mul(cam->forward, -1));
+		cam->position = ft_vec3f_add(cam->position, ft_vec3f_mul(cam->forward, -1 * VELOCITY_MOVE));
 	else if (key == KEY_A)
-		cam->position = ft_vec3f_add(cam->position, ft_vec3f_mul(cam->right, -1));
+		cam->position = ft_vec3f_add(cam->position, ft_vec3f_mul(cam->right, -1 * VELOCITY_MOVE));
 	else if (key == KEY_D)
-		cam->position = ft_vec3f_add(cam->position, ft_vec3f_mul(cam->right, 1));
+		cam->position = ft_vec3f_add(cam->position, ft_vec3f_mul(cam->right, VELOCITY_MOVE));
 	else if (key == KEY_R)
-		cam->position = ft_vec3f_add(cam->position, ft_vec3f_mul(cam->up, 1));
+		cam->position = ft_vec3f_add(cam->position, ft_vec3f_mul(cam->up, VELOCITY_MOVE));
 	else if (key == KEY_F)
-		cam->position = ft_vec3f_add(cam->position, ft_vec3f_mul(cam->up, -1));
+		cam->position = ft_vec3f_add(cam->position, ft_vec3f_mul(cam->up, -1 * VELOCITY_MOVE));
 }
 
 static void				rotate(int key, t_carry *c)
@@ -38,13 +37,13 @@ static void				rotate(int key, t_carry *c)
 
 	cam = c->w->cameras[c->s->cam];
 	if (key == KEY_ARROW_DOWN)
-		cam->rotation.x -= 0.01;
+		cam->rotation.x -= VELOCITY_ROTATE;
 	if (key == KEY_ARROW_UP)
-		cam->rotation.x += 0.01;
+		cam->rotation.x += VELOCITY_ROTATE;
 	if (key == KEY_ARROW_LEFT)
-		cam->rotation.y -= 0.01;
+		cam->rotation.y -= VELOCITY_ROTATE;
 	if (key == KEY_ARROW_RIGHT)
-		cam->rotation.y += 0.01;
+		cam->rotation.y += VELOCITY_ROTATE;
 	set_camera_axes(cam);
 }
 

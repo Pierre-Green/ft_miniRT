@@ -18,9 +18,11 @@
 # include <float.h>
 # include <math.h>
 # define USAGE "Usage: ./minirt [-save] file"
-#ifndef M_PI
-  #define M_PI 3.14159265358979323846
-#endif 
+# ifndef M_PI
+#  define M_PI 3.14159265358979323846
+# endif 
+# define VELOCITY_MOVE 1
+# define VELOCITY_ROTATE 0.02
 
 typedef struct		s_carry
 {
