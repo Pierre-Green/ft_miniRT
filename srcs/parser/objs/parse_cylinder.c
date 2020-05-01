@@ -24,8 +24,7 @@ void					parse_cylinder(char *line, t_carry *c)
 	if (!(obj = malloc(sizeof(t_obj))))
 		freexit(-42, "Allocation failed", c);
 	obj->type = CYLINDER;
-	obj->obj.cylinder = (t_cylinder){	results[0].vec3f, results[1].vec3f,
-										results[2].f, results[2].f / 2, results[3].f, results[4].color };
+	new_cylinder(&obj->obj.cylinder, results);
 	add_obj(obj, c);
 	free((void *)results);
 }

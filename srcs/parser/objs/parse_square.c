@@ -24,8 +24,7 @@ void					parse_square(char *line, t_carry *c)
 	if (!(obj = malloc(sizeof(t_obj))))
 		freexit(-42, "Allocation failed", c);
 	obj->type = SQUARE;
-	obj->obj.square = (t_square){	results[0].vec3f, results[1].vec3f,
-									results[2].f, results[3].color };
+	new_square(&obj->obj.square, results);
 	add_obj(obj, c);
 	free((void *)results);
 }

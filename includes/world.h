@@ -64,7 +64,7 @@ t_bool				plane_intersects(t_plane plane, t_vec3f origin, t_vec3f dir, float *di
 t_second_ray		plane_second_ray(t_plane plane, t_vec3f origin, t_vec3f dir, float dist);
 typedef struct		s_square
 {
-	t_vec3f			position;
+	t_vec3f			center;
 	t_vec3f			orientation;
 	double			height;
 	t_color			color;
@@ -84,9 +84,11 @@ t_bool				cylinder_intersects(t_cylinder cylinder, t_vec3f origin, t_vec3f dir, 
 t_second_ray		cylinder_second_ray(t_cylinder cylinder, t_vec3f origin, t_vec3f dir, float dist);
 typedef struct		s_triangle
 {
-	t_vec3f			point_1;
-	t_vec3f			point_2;
-	t_vec3f			point_3;
+	t_vec3f			a;
+	t_vec3f			b;
+	t_vec3f			c;
+	t_vec3f			ab;
+	t_vec3f			ac;
 	t_vec3f			normal;
 	t_color			color;
 }					t_triangle;

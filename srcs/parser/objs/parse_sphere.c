@@ -24,7 +24,7 @@ void					parse_sphere(char *line, t_carry *c)
 	if (!(obj = malloc(sizeof(t_obj))))
 		freexit(-42, "Allocation failed", c);
 	obj->type = SPHERE;
-	obj->obj.sphere = (t_sphere){ results[0].vec3f, results[1].f, results[2].color };
+	new_sphere(&obj->obj.sphere, results);
 	add_obj(obj, c);
 	free((void *)results);
 }

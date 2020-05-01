@@ -24,7 +24,7 @@ void					parse_plane(char *line, t_carry *c)
 	if (!(obj = malloc(sizeof(t_obj))))
 		freexit(-42, "Allocation failed", c);
 	obj->type = PLANE;
-	obj->obj.plane = (t_plane){ results[0].vec3f, results[1].vec3f, results[2].color };
+	new_plane(&obj->obj.plane, results);
 	add_obj(obj, c);
 	free((void *)results);
 }
