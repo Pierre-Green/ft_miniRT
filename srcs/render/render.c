@@ -50,9 +50,8 @@ static t_vec3f		get_raydir(int x, int y, t_carry *c)
 		angles.z / 180 * M_PI
 	);
 
-
-	return (ft_vec3f_rot(dir, angles));
-
+	dir = ft_vec3f_rot(dir, angles);
+	return (ft_vec3f_normalize(dir));
 }
 
 void				render(t_carry *c)
