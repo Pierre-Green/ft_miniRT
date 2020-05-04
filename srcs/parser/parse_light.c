@@ -34,7 +34,7 @@ void					parse_light(char *line, t_carry *c)
 	if (!(c->w->lights[i] = malloc(sizeof(t_light))))
 		freexit(-42, "Allocation failed", c);
 	c->w->lights[i]->position = results[0].vec3f;
-	c->w->lights[i]->dry_wet = results[1].f;
+	c->w->lights[i]->ratio = results[1].f;
 	c->w->lights[i]->color = results[2].color;
 	c->w->lights_count++;
 	free((void *)results);

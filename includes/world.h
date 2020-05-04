@@ -25,7 +25,7 @@ typedef struct		s_second_ray
 typedef struct		s_light
 {
 	t_vec3f			position;
-	double			dry_wet;
+	float			ratio;
 	t_color			color;
 }					t_light;
 typedef struct		s_ambiant_light
@@ -89,6 +89,10 @@ typedef struct		s_triangle
 	t_vec3f			c;
 	t_vec3f			ab;
 	t_vec3f			ac;
+	float			dot_abab;
+	float			dot_abac;
+	float			dot_acac;
+	float			calcul_d;
 	t_vec3f			normal;
 	t_color			color;
 }					t_triangle;
