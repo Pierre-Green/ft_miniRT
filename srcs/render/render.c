@@ -19,11 +19,27 @@ static void			set_pixel(unsigned int pos, t_color color, t_carry *c)
 	c->s->image[pos + 2] = ft_color_get_r(color);
 }
 
-// TODO FIX IT
+static t_vec3f		get_raydir(int x, int y, t_carry *c)
+{
+	t_camera		*camera;
+	t_vec3f			dir;
+	float			scale;
+	float			aspect_ratio;
+
+	camera = c->w->cameras[c->s->cam];
+	scale = tanf((camera->fov * 0.5) * M_PI / 180);
+	aspect_ratio = c->w->res[0] / (float)c->w->res[1];
+	dir = ft_vec3f_init(
+		(2 * (x + 0.5) / (float)c->w->res[0] - 1) * aspect_ratio * scale,
+		(1 - 2 * (y + 0.5) / (float)c->w->res[1]) * scale,
+		1);
+	dir = ft_vec3f_rot(dir, camera->rotation);
+	return (ft_vec3f_normalize(dir));
+}
+/*
 static t_vec3f		get_raydir(int x, int y, t_carry *c)
 {
 	t_vec3f			dir;
-	t_vec3f			angles;
 	float			width;
 	float			height;
 
@@ -43,16 +59,10 @@ static t_vec3f		get_raydir(int x, int y, t_carry *c)
 		1
 	);
 
-	angles = ft_vec3f_mul(c->w->cameras[c->s->cam]->rotation, 360);
-	angles = ft_vec3f_init(
-		angles.x / 180 * M_PI,
-		angles.y / 180 * M_PI,
-		angles.z / 180 * M_PI
-	);
-
-	dir = ft_vec3f_rot(dir, angles);
+	dir = ft_vec3f_rot(dir, c->w->cameras[c->s->cam]->rotation);
 	return (ft_vec3f_normalize(dir));
 }
+*/
 
 void				render(t_carry *c)
 {
@@ -70,7 +80,7 @@ void				render(t_carry *c)
 		while (x < c->w->res[0])
 		{
 			pixel = trace(origin, get_raydir(x, y, c), c);
-			pos = ((((c->w->res[1] - y) * c->s->size_line) + (x * (c->s->bits_per_pixel / 8))));
+			pos = (((y * c->s->size_line) + (x * (c->s->bits_per_pixel / 8))));
 			set_pixel(pos, pixel, c);
 			x++;
 		}

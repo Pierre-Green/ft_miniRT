@@ -6,7 +6,7 @@
 /*   By: pguthaus <pguthaus@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/29 02:33:14 by pguthaus          #+#    #+#             */
-/*   Updated: 2020/05/04 15:39:43 by pguthaus         ###   ########.fr       */
+/*   Updated: 2020/05/05 18:20:28 by pguthaus         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,5 +57,5 @@ t_second_ray		triangle_second_ray(t_triangle triangle, t_vec3f origin, t_vec3f d
 	t_vec3f			intersection_point;
 
 	intersection_point = ft_vec3f_add(origin, ft_vec3f_mul(dir, dist));
-	return ((t_second_ray){ intersection_point, ft_vec3f_mul(triangle.normal, -1) });
+	return ((t_second_ray){ intersection_point, triangle.normal });
 }

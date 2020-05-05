@@ -67,6 +67,13 @@ typedef struct		s_square
 	t_vec3f			center;
 	t_vec3f			orientation;
 	double			height;
+	t_vec3f			a;
+	t_vec3f			b;
+	t_vec3f			c;
+	t_vec3f			d;
+	t_vec3f			ab;
+	t_vec3f			ac;
+	t_vec3f			normal;
 	t_color			color;
 }					t_square;
 t_bool				square_intersects(t_square square, t_vec3f origin, t_vec3f dir, float *dist);

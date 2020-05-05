@@ -83,8 +83,6 @@ static t_vec3f				parse_vec3f(char *line, unsigned int *pos,
 		(*pos)++;
 		i++;
 	}
-	if (normalized)
-		return ft_vec3f_init(tmp[0] * -1, tmp[1] * -1, tmp[2] * -1);
 	return (ft_vec3f_init(tmp[0], tmp[1], tmp[2]));
 }
 
