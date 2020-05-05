@@ -6,7 +6,7 @@
 /*   By: pguthaus <pguthaus@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/26 03:12:31 by pguthaus          #+#    #+#             */
-/*   Updated: 2020/05/01 14:57:22 by pguthaus         ###   ########.fr       */
+/*   Updated: 2020/05/05 19:08:32 by pguthaus         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,9 +26,9 @@ static void				move(int key, t_carry *c)
 	else if (key == KEY_D)
 		cam->position = ft_vec3f_add(cam->position, ft_vec3f_mul(cam->right, VELOCITY_MOVE));
 	else if (key == KEY_R)
-		cam->position = ft_vec3f_add(cam->position, ft_vec3f_mul(cam->up, VELOCITY_MOVE));
+		cam->position = ft_vec3f_add(cam->position, ft_vec3f_init(0, VELOCITY_MOVE, 0));
 	else if (key == KEY_F)
-		cam->position = ft_vec3f_add(cam->position, ft_vec3f_mul(cam->up, -1 * VELOCITY_MOVE));
+		cam->position = ft_vec3f_add(cam->position, ft_vec3f_init(0, -1 * VELOCITY_MOVE, 0));
 }
 
 static void				rotate(int key, t_carry *c)
