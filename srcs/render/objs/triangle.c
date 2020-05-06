@@ -6,7 +6,7 @@
 /*   By: pguthaus <pguthaus@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/29 02:33:14 by pguthaus          #+#    #+#             */
-/*   Updated: 2020/05/05 18:20:28 by pguthaus         ###   ########.fr       */
+/*   Updated: 2020/05/06 21:24:26 by pguthaus         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,10 +52,19 @@ t_bool				triangle_intersects(t_triangle triangle, t_vec3f origin, t_vec3f dir, 
 	return (beetween_points(triangle, origin, dir, *dist));
 }
 
-t_second_ray		triangle_second_ray(t_triangle triangle, t_vec3f origin, t_vec3f dir, float dist)
+t_second_ray		triangle_compute_normal(t_triangle triangle, t_second_ray next_ray)
 {
-	t_vec3f			intersection_point;
+	next_ray.normal = triangle.normal;
+	return (next_ray);
+}
 
-	intersection_point = ft_vec3f_add(origin, ft_vec3f_mul(dir, dist));
-	return ((t_second_ray){ intersection_point, triangle.normal });
+t_bool				triangle_second_ray(t_triangle triangle, t_second_ray *next_ray)
+{
+	t_bool			does_intersect;
+	float			tmp;
+
+	does_intersect = triangle_intersects(triangle, next_ray->origin, next_ray->light_dir, &tmp);
+	if (does_intersect)
+		return (true);
+	return (false);
 }

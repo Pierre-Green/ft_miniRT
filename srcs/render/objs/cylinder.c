@@ -6,7 +6,7 @@
 /*   By: pguthaus <pguthaus@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/29 02:32:54 by pguthaus          #+#    #+#             */
-/*   Updated: 2019/12/19 22:37:51 by pguthaus         ###   ########.fr       */
+/*   Updated: 2020/05/06 21:30:28 by pguthaus         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,19 @@ t_bool				cylinder_intersects(t_cylinder cylinder, t_vec3f origin, t_vec3f dir, 
 	return (false);
 }
 
+t_second_ray				cylinder_compute_normal(t_cylinder cylinder, t_second_ray next_ray)
+{
+	(void)cylinder;
+	return (next_ray);
+}
+
+t_bool						cylinder_second_ray(t_cylinder cylinder, t_second_ray *next_ray)
+{
+	(void)cylinder;
+	(void)next_ray;
+	return (false);
+}
+/*
 t_second_ray				cylinder_second_ray(t_cylinder cylinder, t_vec3f origin, t_vec3f dir, float dist)
 {
 	const t_vec3f			top = ft_vec3f_add(cylinder.position, ft_vec3f_mul(cylinder.orientation, cylinder.height));
@@ -69,3 +82,4 @@ t_second_ray				cylinder_second_ray(t_cylinder cylinder, t_vec3f origin, t_vec3f
 		res.ray_dir = ft_vec3f_normalize(ft_vec3f_mul(ft_vec3f_sub(ft_vec3f_add(oc, ft_vec3f_mul(dir, dist)), ft_vec3f_mul(ca, y)), 1 / cylinder.radius));
 	return (res);
 }
+*/

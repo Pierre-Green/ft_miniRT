@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minirt.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pguthaus <pguthaus@student.42.fr>              +#+  +:+       +#+        */
+/*   By: pguthaus <pguthaus@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/11/22 19:29:27 by pguthaus          #+#    #+#             */
-/*   Updated: 2020/04/18 00:05:36 by pguthaus           ###   ########.fr       */
+/*   Created: 2020/05/06 17:30:13 by pguthaus          #+#    #+#             */
+/*   Updated: 2020/05/06 17:54:56 by pguthaus         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ void				load_world(const char *file, t_carry *c);
 void				init_window(t_carry *c);
 void				render(t_carry *c);
 t_color				trace(t_vec3f origin, t_vec3f raydir, t_carry *c);
+t_color				process_light_and_shadow(t_second_ray next_ray, t_carry *c);
 void				do_output(t_carry *c);
 
 void				freexit(int exit_code, const char *message, t_carry *c);

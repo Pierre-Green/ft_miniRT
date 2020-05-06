@@ -6,6 +6,7 @@ SRCS+=render/objs/cylinder.c
 SRCS+=render/objs/plane.c
 SRCS+=render/objs/square.c
 SRCS+=render/render.c
+SRCS+=render/lighting_shadowing.c
 SRCS+=main.c
 SRCS+=parser/objs/objs_utils.c
 SRCS+=parser/objs/parse_cylinder.c

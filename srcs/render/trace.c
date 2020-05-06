@@ -6,7 +6,7 @@
 /*   By: pguthaus <pguthaus@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/26 17:23:56 by pguthaus          #+#    #+#             */
-/*   Updated: 2020/05/05 17:08:52 by pguthaus         ###   ########.fr       */
+/*   Updated: 2020/05/06 21:45:12 by pguthaus         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,22 +27,7 @@ static t_bool		intersects(t_obj *obj, t_vec3f origin, t_vec3f dir, float *dist)
 	return (false);
 }
 
-t_second_ray			get_next_ray(t_obj *hitted, t_vec3f origin, t_vec3f raydir, float dist)
-{
-	if (hitted->type == SPHERE)
-		return (sphere_second_ray(hitted->obj.sphere, origin, raydir, dist));
-	if (hitted->type == PLANE)
-		return (plane_second_ray(hitted->obj.plane, origin, raydir, dist));
-	if (hitted->type == SQUARE)
-		return (square_second_ray(hitted->obj.square, origin, raydir, dist));
-	if (hitted->type == CYLINDER)
-		return (cylinder_second_ray(hitted->obj.cylinder, origin, raydir, dist));
-	if (hitted->type == TRIANGLE)
-		return (triangle_second_ray(hitted->obj.triangle, origin, raydir, dist));
-	return ((t_second_ray){ ft_vec3f_init1(0), ft_vec3f_init1(0) });
-}
-
-t_color				get_hitted_color(t_obj *hitted)
+static t_color		get_hitted_color(t_obj *hitted)
 {
 	if (hitted->type == SPHERE)
 		return (hitted->obj.sphere.color);
@@ -57,85 +42,45 @@ t_color				get_hitted_color(t_obj *hitted)
 	return (0);
 }
 
-t_color				trace(t_vec3f origin, t_vec3f raydir, t_carry *c)
+static t_obj		*get_closest_obj(t_vec3f origin, t_vec3f raydir, t_carry *c, float *distance)
 {
 	t_obj			*hitted;
 	float			nearest;
-	float			distance;
 	unsigned int	i;
-	t_second_ray	next_ray;
 
 	hitted = 0;
 	nearest = FLT_MAX;
 	i = 0;
 	while (i < c->w->objs_count)
 	{
-		distance = FLT_MAX;
-		if (intersects(c->w->objs[i], origin, raydir, &distance))
+		*distance = FLT_MAX;
+		if (intersects(c->w->objs[i], origin, raydir, distance))
 		{
-			if (distance > 1e-4 && distance < nearest)
+			if (*distance > 1e-4 && *distance < nearest)
 			{
 				hitted = c->w->objs[i];
-				nearest = distance;
+				nearest = *distance;
 				break ;
 			}
 		}
 		i++;
 	}
-	if (!hitted)
+	*distance = nearest;
+	return (hitted);
+}
+
+
+t_color				trace(t_vec3f origin, t_vec3f raydir, t_carry *c)
+{
+	t_obj			*hitted;
+	float			distance;
+	t_second_ray	next_ray;
+
+	if (!(hitted = get_closest_obj(origin, raydir, c, &distance)))
 		return (ft_color_rgb(0, 0, 0));
-	next_ray = get_next_ray(hitted, origin, raydir, nearest);
-
-	// Check for any lights
-	uint8_t			transmission;
-	t_vec3f			light_direction;
-	t_color			color;
-	unsigned int	k;
-	unsigned int	j;
-	t_vec3f			light_fac;
-	float			light_power;
-
-	// Apply ambiant light
-	color = get_hitted_color(hitted);
-	light_fac = ft_vec3f_init(
-		(ft_color_get_r(c->w->ambiant_light->color) / 255.0f) * c->w->ambiant_light->ratio,
-		(ft_color_get_g(c->w->ambiant_light->color) / 255.0f) * c->w->ambiant_light->ratio,
-		(ft_color_get_b(c->w->ambiant_light->color) / 255.0f) * c->w->ambiant_light->ratio);
-
-	k = 0;
-	while (k < c->w->lights_count)
-	{
-		transmission = 1;
-		light_direction = ft_vec3f_normalize(ft_vec3f_sub(next_ray.hit_point, c->w->lights[k]->position));
-		j = 0;
-		while (j < c->w->objs_count)
-		{
-			if (j != i)
-			{
-				if (intersects(c->w->objs[j], next_ray.hit_point, light_direction, &distance) && distance < 0)
-				{
-					transmission = 0;
-					break ;
-				}
-			}
-			j++;
-		}
-
-		// Apply light
-		if (transmission)
-		{
-			light_power = ft_vec3f_dot(next_ray.ray_dir, light_direction);
-			if (light_power > 0)
-			{
-				light_fac.x = ft_fmin(1.0f, light_fac.x + (light_power * ((ft_color_get_r(c->w->lights[k]->color) / 255.0f) * c->w->lights[k]->ratio)));
-				light_fac.y = ft_fmin(1.0f, light_fac.y + (light_power * ((ft_color_get_g(c->w->lights[k]->color) / 255.0f) * c->w->lights[k]->ratio)));
-				light_fac.z = ft_fmin(1.0f, light_fac.z + (light_power * ((ft_color_get_b(c->w->lights[k]->color) / 255.0f) * c->w->lights[k]->ratio)));
-			}
-		}
-		k++;
-	}
-	color = ft_color_set_r(color, ft_color_get_r(color) * light_fac.x);
-	color = ft_color_set_g(color, ft_color_get_g(color) * light_fac.y);
-	color = ft_color_set_b(color, ft_color_get_b(color) * light_fac.z);
-	return (color);
+	next_ray.hitted = hitted;
+	next_ray.color = get_hitted_color(hitted);
+	next_ray.distance = distance;
+	next_ray.origin = ft_vec3f_add(origin, ft_vec3f_mul(raydir, distance));
+	return (process_light_and_shadow(next_ray, c));
 }

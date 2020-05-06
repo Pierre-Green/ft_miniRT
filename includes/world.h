@@ -17,10 +17,14 @@
 
 typedef struct		s_second_ray
 {
-	t_vec3f			hit_point;
-	t_vec3f			ray_dir;
+	struct s_obj	*hitted;
+	t_color			color;
+	float			distance;
+	t_vec3f			origin;
+	t_vec3f			light_fac;
+	t_vec3f			normal;
+	t_vec3f			light_dir;
 }					t_second_ray;
-
 
 typedef struct		s_light
 {
@@ -53,7 +57,8 @@ typedef struct		s_sphere
 	t_color			color;
 }					t_sphere;
 t_bool				sphere_intersects(t_sphere sphere, t_vec3f origin, t_vec3f dir, float *dist);
-t_second_ray		sphere_second_ray(t_sphere sphere, t_vec3f origin, t_vec3f dir, float dist);
+t_second_ray		sphere_compute_normal(t_sphere sphere, t_second_ray next_ray);
+t_bool				sphere_second_ray(t_sphere sphere, t_second_ray *next_ray);
 typedef struct		s_plane
 {
 	t_vec3f			position;
@@ -61,7 +66,8 @@ typedef struct		s_plane
 	t_color			color;
 }					t_plane;
 t_bool				plane_intersects(t_plane plane, t_vec3f origin, t_vec3f dir, float *dist);
-t_second_ray		plane_second_ray(t_plane plane, t_vec3f origin, t_vec3f dir, float dist);
+t_second_ray		plane_compute_normal(t_plane plane, t_second_ray next_ray);
+t_bool				plane_second_ray(t_plane plane, t_second_ray *next_ray);
 typedef struct		s_square
 {
 	t_vec3f			center;
@@ -77,7 +83,8 @@ typedef struct		s_square
 	t_color			color;
 }					t_square;
 t_bool				square_intersects(t_square square, t_vec3f origin, t_vec3f dir, float *dist);
-t_second_ray		square_second_ray(t_square square, t_vec3f origin, t_vec3f dir, float dist);
+t_second_ray		square_compute_normal(t_square square, t_second_ray next_ray);
+t_bool				square_second_ray(t_square square, t_second_ray *next_ray);
 typedef struct		s_cylinder
 {
 	t_vec3f			position;
@@ -88,7 +95,8 @@ typedef struct		s_cylinder
 	t_color			color;
 }					t_cylinder;
 t_bool				cylinder_intersects(t_cylinder cylinder, t_vec3f origin, t_vec3f dir, float *dist);
-t_second_ray		cylinder_second_ray(t_cylinder cylinder, t_vec3f origin, t_vec3f dir, float dist);
+t_second_ray		cylinder_compute_normal(t_cylinder cylinder, t_second_ray next_ray);
+t_bool				cylinder_second_ray(t_cylinder cylinder, t_second_ray *next_ray);
 typedef struct		s_triangle
 {
 	t_vec3f			a;
@@ -104,7 +112,8 @@ typedef struct		s_triangle
 	t_color			color;
 }					t_triangle;
 t_bool				triangle_intersects(t_triangle triangle, t_vec3f origin, t_vec3f dir, float *dist);
-t_second_ray		triangle_second_ray(t_triangle triangle, t_vec3f origin, t_vec3f dir, float dist);
+t_second_ray		triangle_compute_normal(t_triangle triangle, t_second_ray next_ray);
+t_bool				triangle_second_ray(t_triangle triangle, t_second_ray *next_ray);
 typedef enum		e_obj_types
 {
 	SPHERE,
