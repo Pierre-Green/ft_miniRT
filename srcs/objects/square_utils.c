@@ -6,7 +6,7 @@
 /*   By: pguthaus <pguthaus@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/01 22:10:25 by pguthaus          #+#    #+#             */
-/*   Updated: 2020/05/05 17:23:19 by pguthaus         ###   ########.fr       */
+/*   Updated: 2020/05/07 17:12:15 by pguthaus         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,5 +50,5 @@ void		new_square(t_square *dest, t_line_result *results)
 	set_square_points(dest);
 	dest->ab = ft_vec3f_sub(dest->b, dest->a);
 	dest->ac = ft_vec3f_sub(dest->c, dest->a);
-	dest->normal = ft_vec3f_cross(dest->ab, dest->ac);
+	dest->normal = ft_vec3f_normalize(ft_vec3f_cross(dest->ab, dest->ac));
 }
