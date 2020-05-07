@@ -6,7 +6,7 @@
 /*   By: pguthaus <pguthaus@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/26 03:12:31 by pguthaus          #+#    #+#             */
-/*   Updated: 2020/05/05 19:08:32 by pguthaus         ###   ########.fr       */
+/*   Updated: 2020/05/07 18:33:02 by pguthaus         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,9 +61,8 @@ static int					on_key_pressed(int key, void *p_c)
 
 	if (key == KEY_ESC)
 	{
-		mlx_destroy_image(c->s->mlx_ptr, c->s->img_ptr);
-		mlx_destroy_window(c->s->mlx_ptr, c->s->win_ptr);
-		exit(0);
+		freexit(0, 0, (t_carry *)c);
+		return (0);
 	}
 	if (key == KEY_W || key == KEY_A || key == KEY_S || key == KEY_D || key == KEY_R || key == KEY_F)
 		move(key, (t_carry *)c);
@@ -78,6 +77,12 @@ static int					on_key_pressed(int key, void *p_c)
 	return (0);
 }
 
+static int				on_window_closed(void *p_c)
+{
+	freexit(0, 0, (t_carry *)p_c);
+	return (0);
+}
+
 void					init_window(t_carry *c)
 {
 	if (!(c->s->mlx_ptr = mlx_init()))
@@ -87,5 +92,6 @@ void					init_window(t_carry *c)
 	if (!(c->s->img_ptr = mlx_new_image(c->s->mlx_ptr, c->w->res[0], c->w->res[1])))
 		freexit(22, "Failed to mlx_new_image()", c);
 	c->s->image = mlx_get_data_addr(c->s->img_ptr, &(c->s->bits_per_pixel), &(c->s->size_line), &(c->s->endian));
-	mlx_key_hook(c->s->win_ptr, on_key_pressed, c);
+	mlx_hook(c->s->win_ptr, 2, 1L << 0, on_key_pressed, c);
+	mlx_hook(c->s->win_ptr, 17, 1L << 17, on_window_closed, c);
 }
