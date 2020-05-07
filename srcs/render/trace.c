@@ -6,7 +6,7 @@
 /*   By: pguthaus <pguthaus@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/26 17:23:56 by pguthaus          #+#    #+#             */
-/*   Updated: 2020/05/06 21:45:12 by pguthaus         ###   ########.fr       */
+/*   Updated: 2020/05/07 17:25:31 by pguthaus         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,11 +56,10 @@ static t_obj		*get_closest_obj(t_vec3f origin, t_vec3f raydir, t_carry *c, float
 		*distance = FLT_MAX;
 		if (intersects(c->w->objs[i], origin, raydir, distance))
 		{
-			if (*distance > 1e-4 && *distance < nearest)
+			if (*distance < nearest)
 			{
 				hitted = c->w->objs[i];
 				nearest = *distance;
-				break ;
 			}
 		}
 		i++;
