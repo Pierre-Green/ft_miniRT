@@ -6,7 +6,7 @@
 /*   By: pguthaus <pguthaus@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/12 19:49:16 by pguthaus          #+#    #+#             */
-/*   Updated: 2020/04/30 22:16:29 by pguthaus         ###   ########.fr       */
+/*   Updated: 2020/05/07 18:39:46 by pguthaus         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,10 +53,10 @@ static void			parse(int fd, t_carry *c)
 		line_router(line, c);
 		free(line);
 	}
-	if (ret == -1)
-		freexit(43, "Error while reading file.", c);
 	if (line)
 		free((void *)line);
+	if (ret == -1)
+		freexit(43, "Error while reading file.", c);
 	if (c->w->res[0] == 0 || c->w->res[1] == 0)
 		freexit(44, "Please provide resolution", c);
 	if (!c->w->ambiant_light)
