@@ -6,25 +6,32 @@
 /*   By: pguthaus <pguthaus@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/06 17:29:27 by pguthaus          #+#    #+#             */
-/*   Updated: 2020/05/06 21:50:54 by pguthaus         ###   ########.fr       */
+/*   Updated: 2020/05/07 17:11:24 by pguthaus         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 
-static t_bool		intersects(t_obj *obj, t_second_ray *next_ray)
+static t_bool		intersects(t_obj *obj, t_second_ray *next_ray, t_light *light)
 {
+	t_bool			result;
+	float			distance;
+
 	if (obj->type == SPHERE)
-		return (sphere_second_ray(obj->obj.sphere, next_ray));
+		result = sphere_second_ray(obj->obj.sphere, next_ray, &distance);
 	if (obj->type == PLANE)
-		return (plane_second_ray(obj->obj.plane, next_ray));
+		result = plane_second_ray(obj->obj.plane, next_ray, &distance);
 	if (obj->type == SQUARE)
-		return (square_second_ray(obj->obj.square, next_ray));
+		result = square_second_ray(obj->obj.square, next_ray, &distance);
 	if (obj->type == CYLINDER)
-		return (cylinder_second_ray(obj->obj.cylinder, next_ray));
+		result = cylinder_second_ray(obj->obj.cylinder, next_ray, &distance);
 	if (obj->type == TRIANGLE)
-		return (triangle_second_ray(obj->obj.triangle, next_ray));
-	return (false);
+		result = triangle_second_ray(obj->obj.triangle, next_ray, &distance);
+	if (!result)
+		return (false);
+	if (distance >= ft_vec3f_len(ft_vec3f_sub(light->position, next_ray->origin)))
+		return (false);
+	return (true);
 }
 
 static t_second_ray	compute_normal(t_second_ray next_ray)
@@ -52,6 +59,17 @@ static t_second_ray	apply_light(t_second_ray next_ray, t_light *light)
 		next_ray.light_fac.x = ft_fmin(1.0f, next_ray.light_fac.x + (light_power * ((ft_color_get_r(light->color) / 255.0f) * light->ratio)));
 		next_ray.light_fac.y = ft_fmin(1.0f, next_ray.light_fac.y + (light_power * ((ft_color_get_g(light->color) / 255.0f) * light->ratio)));
 		next_ray.light_fac.z = ft_fmin(1.0f, next_ray.light_fac.z + (light_power * ((ft_color_get_b(light->color) / 255.0f) * light->ratio)));
+		return (next_ray);
+	}
+	if (!next_ray.has_normal_b)
+		return (next_ray);
+	light_power = ft_vec3f_dot(next_ray.normal_b, next_ray.light_dir);
+	if (light_power > 0)
+	{
+		next_ray.light_fac.x = ft_fmin(1.0f, next_ray.light_fac.x + (light_power * ((ft_color_get_r(light->color) / 255.0f) * light->ratio)));
+		next_ray.light_fac.y = ft_fmin(1.0f, next_ray.light_fac.y + (light_power * ((ft_color_get_g(light->color) / 255.0f) * light->ratio)));
+		next_ray.light_fac.z = ft_fmin(1.0f, next_ray.light_fac.z + (light_power * ((ft_color_get_b(light->color) / 255.0f) * light->ratio)));
+		return (next_ray);
 	}
 	return (next_ray);
 }
@@ -72,7 +90,7 @@ static t_second_ray	lights(t_second_ray next_ray, t_carry *c)
 		{
 			if (c->w->objs[j] != next_ray.hitted)
 			{
-				if (intersects(c->w->objs[j], &next_ray))
+				if (intersects(c->w->objs[j], &next_ray, c->w->lights[i]))
 				{
 					transmission = false;
 					break ;

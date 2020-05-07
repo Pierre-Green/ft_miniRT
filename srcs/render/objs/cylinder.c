@@ -6,7 +6,7 @@
 /*   By: pguthaus <pguthaus@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/29 02:32:54 by pguthaus          #+#    #+#             */
-/*   Updated: 2020/05/06 21:30:28 by pguthaus         ###   ########.fr       */
+/*   Updated: 2020/05/07 16:55:00 by pguthaus         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,10 +58,11 @@ t_second_ray				cylinder_compute_normal(t_cylinder cylinder, t_second_ray next_r
 	return (next_ray);
 }
 
-t_bool						cylinder_second_ray(t_cylinder cylinder, t_second_ray *next_ray)
+t_bool						cylinder_second_ray(t_cylinder cylinder, t_second_ray *next_ray, float *dist)
 {
 	(void)cylinder;
 	(void)next_ray;
+	(void)dist;
 	return (false);
 }
 /*

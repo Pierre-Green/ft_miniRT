@@ -6,7 +6,7 @@
 /*   By: pguthaus <pguthaus@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/29 02:22:06 by pguthaus          #+#    #+#             */
-/*   Updated: 2020/05/06 21:54:13 by pguthaus         ###   ########.fr       */
+/*   Updated: 2020/05/07 17:08:35 by pguthaus         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,16 +39,16 @@ t_bool			sphere_intersects(t_sphere sphere, t_vec3f origin, t_vec3f dir, float *
 t_second_ray		sphere_compute_normal(t_sphere sphere, t_second_ray next_ray)
 {
 	next_ray.normal = ft_vec3f_normalize(ft_vec3f_sub(next_ray.origin, sphere.position));
+	next_ray.has_normal_b = false;
 	return (next_ray);
 }
 
-t_bool				sphere_second_ray(t_sphere sphere, t_second_ray *next_ray)
+t_bool				sphere_second_ray(t_sphere sphere, t_second_ray *next_ray, float *dist)
 {
 	t_bool			does_intersect;
-	float			tmp;
 
-	does_intersect = sphere_intersects(sphere, next_ray->origin, next_ray->light_dir, &tmp);
-	if (does_intersect && tmp >= 0)
+	does_intersect = sphere_intersects(sphere, next_ray->origin, next_ray->light_dir, dist);
+	if (does_intersect && *dist >= 0)
 		return (true);
 	return (false);
 }

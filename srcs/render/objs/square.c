@@ -6,7 +6,7 @@
 /*   By: pguthaus <pguthaus@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/29 02:32:27 by pguthaus          #+#    #+#             */
-/*   Updated: 2020/05/06 21:24:51 by pguthaus         ###   ########.fr       */
+/*   Updated: 2020/05/07 17:09:45 by pguthaus         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,15 +49,16 @@ t_bool				square_intersects(t_square square, t_vec3f origin, t_vec3f dir, float 
 t_second_ray		square_compute_normal(t_square square, t_second_ray next_ray)
 {
 	next_ray.normal = square.normal;
+	next_ray.has_normal_b = true;
+	next_ray.normal_b = ft_vec3f_mul(square.normal, -1);
 	return (next_ray);
 }
 
-t_bool				square_second_ray(t_square square, t_second_ray *next_ray)
+t_bool				square_second_ray(t_square square, t_second_ray *next_ray, float *dist)
 {
 	t_bool			does_intersect;
-	float			tmp;
 
-	does_intersect = square_intersects(square, next_ray->origin, next_ray->light_dir, &tmp);
+	does_intersect = square_intersects(square, next_ray->origin, next_ray->light_dir, dist);
 	if (does_intersect)
 		return (true);
 	return (false);
