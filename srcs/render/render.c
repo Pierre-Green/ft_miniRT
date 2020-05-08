@@ -57,33 +57,6 @@ static t_vec3f		get_raydir(int x, int y, t_carry *c)
 	dir = to_world(dir, camera);
 	return (ft_vec3f_normalize(dir));
 }
-/*
-static t_vec3f		get_raydir(int x, int y, t_carry *c)
-{
-	t_vec3f			dir;
-	float			width;
-	float			height;
-
-	x = -(c->w->res[0] / 2) + 1 + x;
-	y = -(c->w->res[1] / 2) + 1 + y;
-
-	width = 1;
-	height = 1;
-	if (c->w->res[0] >= c->w->res[1])
-		width = (float)c->w->res[0] / c->w->res[1];
-	else
-		height = (float)c->w->res[1] / c->w->res[0];
-
-	dir = ft_vec3f_init(
-		x * (width / c->w->res[0]),
-		y * (height / c->w->res[1]),
-		1
-	);
-
-	dir = ft_vec3f_rot(dir, c->w->cameras[c->s->cam]->rotation);
-	return (ft_vec3f_normalize(dir));
-}
-*/
 
 void				render(t_carry *c)
 {
