@@ -6,7 +6,7 @@
 /*   By: pguthaus <pguthaus@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/29 02:32:54 by pguthaus          #+#    #+#             */
-/*   Updated: 2020/05/07 16:55:00 by pguthaus         ###   ########.fr       */
+/*   Updated: 2020/05/08 17:30:28 by pguthaus         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,33 +54,31 @@ t_bool				cylinder_intersects(t_cylinder cylinder, t_vec3f origin, t_vec3f dir, 
 
 t_second_ray				cylinder_compute_normal(t_cylinder cylinder, t_second_ray next_ray)
 {
-	(void)cylinder;
+	t_vec3f					top_center;
+	float					tmp;
+	float					tmp2;
+
+	top_center = ft_vec3f_add(cylinder.position, ft_vec3f_mul(cylinder.orientation, cylinder.height));
+	if (ft_vec3f_dist(top_center, next_ray.origin) <= cylinder.radius)
+		next_ray.normal = cylinder.orientation;
+	else if (ft_vec3f_dist(cylinder.position, next_ray.origin) <= cylinder.radius)
+		next_ray.normal = ft_vec3f_mul(cylinder.orientation, -1);
+	else
+	{
+		tmp = ft_vec3f_len(ft_vec3f_sub(cylinder.position, next_ray.origin));
+		tmp2 = sqrtf(powf(tmp, 2) - powf(cylinder.radius, 2));
+		next_ray.normal = ft_vec3f_normalize(ft_vec3f_sub(next_ray.origin, ft_vec3f_add(cylinder.position, ft_vec3f_mul(cylinder.orientation, tmp2))));
+	}
+	next_ray.has_normal_b = false;
 	return (next_ray);
 }
 
 t_bool						cylinder_second_ray(t_cylinder cylinder, t_second_ray *next_ray, float *dist)
 {
-	(void)cylinder;
-	(void)next_ray;
-	(void)dist;
+	t_bool			does_intersect;
+
+	does_intersect = cylinder_intersects(cylinder, next_ray->origin, next_ray->light_dir, dist);
+	if (does_intersect)
+		return (true);
 	return (false);
 }
-/*
-t_second_ray				cylinder_second_ray(t_cylinder cylinder, t_vec3f origin, t_vec3f dir, float dist)
-{
-	const t_vec3f			top = ft_vec3f_add(cylinder.position, ft_vec3f_mul(cylinder.orientation, cylinder.height));
-	const t_vec3f			ca = ft_vec3f_sub(top, cylinder.position);
-	const t_vec3f			oc = ft_vec3f_sub(origin, cylinder.position);
-	const float				y = ft_vec3f_dot(ca, oc) + dist * ft_vec3f_dot(ca, dir);
-	t_second_ray			res;
-
-	res.hit_point = ft_vec3f_add(origin, ft_vec3f_mul(dir, dist));
-	if (ft_vec3f_dist(top, res.hit_point) < cylinder.radius)
-		res.ray_dir = ft_vec3f_normalize(cylinder.orientation);
-	else if (ft_vec3f_dist(cylinder.position, res.hit_point) < cylinder.radius)
-		res.ray_dir = ft_vec3f_normalize(ft_vec3f_mul(cylinder.orientation, -1));
-	else
-		res.ray_dir = ft_vec3f_normalize(ft_vec3f_mul(ft_vec3f_sub(ft_vec3f_add(oc, ft_vec3f_mul(dir, dist)), ft_vec3f_mul(ca, y)), 1 / cylinder.radius));
-	return (res);
-}
-*/
