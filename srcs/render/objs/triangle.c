@@ -6,7 +6,7 @@
 /*   By: pguthaus <pguthaus@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/29 02:33:14 by pguthaus          #+#    #+#             */
-/*   Updated: 2020/05/07 17:10:06 by pguthaus         ###   ########.fr       */
+/*   Updated: 2020/05/08 17:51:22 by pguthaus         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,11 +20,11 @@ static t_bool		beetween_points(t_triangle triangle, t_vec3f origin, t_vec3f dir,
 	t_vec3f			w;
 	float			r[2];
 
-	temp = ft_vec3f_mul(dir, dist);
-	point = ft_vec3f_add(origin, temp);
-	w = ft_vec3f_sub(point, triangle.a);
-	dot_wab_wac[0] = ft_vec3f_dot(w, triangle.ab);
-	dot_wab_wac[1] = ft_vec3f_dot(w, triangle.ac);
+	temp = v3f_mul(dir, dist);
+	point = v3f_add(origin, temp);
+	w = v3f_sub(point, triangle.a);
+	dot_wab_wac[0] = v3f_dot(w, triangle.ab);
+	dot_wab_wac[1] = v3f_dot(w, triangle.ac);
 
 	r[0] = (triangle.dot_abac * dot_wab_wac[1] - triangle.dot_acac * dot_wab_wac[0]) / triangle.calcul_d;
 	if (r[0] < 0 || r[0] > 1)
@@ -43,9 +43,9 @@ t_bool				triangle_intersects(t_triangle triangle, t_vec3f origin, t_vec3f dir, 
 	float calcul_a;
 	float b;
 
-	denom = -(ft_vec3f_dot(triangle.normal, triangle.a));
-	calcul_a = ft_vec3f_dot(origin, triangle.normal) + denom;
-	b = ft_vec3f_dot(dir, triangle.normal);
+	denom = -(v3f_dot(triangle.normal, triangle.a));
+	calcul_a = v3f_dot(origin, triangle.normal) + denom;
+	b = v3f_dot(dir, triangle.normal);
 	*dist = -(calcul_a / b);
 	if (*dist < 0)
 		return (false);
@@ -56,7 +56,7 @@ t_second_ray		triangle_compute_normal(t_triangle triangle, t_second_ray next_ray
 {
 	next_ray.normal = triangle.normal;
 	next_ray.has_normal_b = true;
-	next_ray.normal_b = ft_vec3f_mul(triangle.normal, -1);
+	next_ray.normal_b = v3f_mul(triangle.normal, -1);
 	return (next_ray);
 }
 

@@ -6,13 +6,14 @@
 /*   By: pguthaus <pguthaus@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/26 17:23:56 by pguthaus          #+#    #+#             */
-/*   Updated: 2020/05/07 17:25:31 by pguthaus         ###   ########.fr       */
+/*   Updated: 2020/05/08 17:51:22 by pguthaus         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 
-static t_bool		intersects(t_obj *obj, t_vec3f origin, t_vec3f dir, float *dist)
+static t_bool		intersects(t_obj *obj, t_vec3f origin, t_vec3f dir,
+	float *dist)
 {
 	if (obj->type == SPHERE)
 		return (sphere_intersects(obj->obj.sphere, origin, dir, dist));
@@ -42,7 +43,8 @@ static t_color		get_hitted_color(t_obj *hitted)
 	return (0);
 }
 
-static t_obj		*get_closest_obj(t_vec3f origin, t_vec3f raydir, t_carry *c, float *distance)
+static t_obj		*get_closest_obj(t_vec3f origin, t_vec3f raydir,
+	t_carry *c, float *distance)
 {
 	t_obj			*hitted;
 	float			nearest;
@@ -68,7 +70,6 @@ static t_obj		*get_closest_obj(t_vec3f origin, t_vec3f raydir, t_carry *c, float
 	return (hitted);
 }
 
-
 t_color				trace(t_vec3f origin, t_vec3f raydir, t_carry *c)
 {
 	t_obj			*hitted;
@@ -80,6 +81,6 @@ t_color				trace(t_vec3f origin, t_vec3f raydir, t_carry *c)
 	next_ray.hitted = hitted;
 	next_ray.color = get_hitted_color(hitted);
 	next_ray.distance = distance;
-	next_ray.origin = ft_vec3f_add(origin, ft_vec3f_mul(raydir, distance));
+	next_ray.origin = v3f_add(origin, v3f_mul(raydir, distance));
 	return (process_light_and_shadow(next_ray, c));
 }

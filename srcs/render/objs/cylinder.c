@@ -6,7 +6,7 @@
 /*   By: pguthaus <pguthaus@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/29 02:32:54 by pguthaus          #+#    #+#             */
-/*   Updated: 2020/05/08 17:30:28 by pguthaus         ###   ########.fr       */
+/*   Updated: 2020/05/08 17:51:22 by pguthaus         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,16 +21,16 @@ t_bool				cylinder_intersects(t_cylinder cylinder, t_vec3f origin, t_vec3f dir, 
 	t_vec3f		hty;
 	t_vec3f		cardoc;
 
-	pb = ft_vec3f_add(cylinder.position, ft_vec3f_mul(cylinder.orientation, cylinder.height));
-	ca = ft_vec3f_sub(pb, cylinder.position);
-	oc = ft_vec3f_sub(origin, cylinder.position);
+	pb = v3f_add(cylinder.position, v3f_mul(cylinder.orientation, cylinder.height));
+	ca = v3f_sub(pb, cylinder.position);
+	oc = v3f_sub(origin, cylinder.position);
 
-	cardoc.x = ft_vec3f_dot(ca, ca);
-	cardoc.y = ft_vec3f_dot(ca, dir);
-	cardoc.z = ft_vec3f_dot(ca, oc);
+	cardoc.x = v3f_dot(ca, ca);
+	cardoc.y = v3f_dot(ca, dir);
+	cardoc.z = v3f_dot(ca, oc);
 	abc.x = cardoc.x - (cardoc.y * cardoc.y);
-	abc.y = cardoc.x * ft_vec3f_dot(oc, dir) - (cardoc.z * cardoc.y);
-	abc.z = cardoc.x * ft_vec3f_dot(oc, oc) - (cardoc.z * cardoc.z)
+	abc.y = cardoc.x * v3f_dot(oc, dir) - (cardoc.z * cardoc.y);
+	abc.z = cardoc.x * v3f_dot(oc, oc) - (cardoc.z * cardoc.z)
 			- (cylinder.radius * cylinder.radius * cardoc.x);
 	hty.x = (abc.y * abc.y) - (abc.x * abc.z);
 	if (hty.x < 0)
@@ -58,16 +58,16 @@ t_second_ray				cylinder_compute_normal(t_cylinder cylinder, t_second_ray next_r
 	float					tmp;
 	float					tmp2;
 
-	top_center = ft_vec3f_add(cylinder.position, ft_vec3f_mul(cylinder.orientation, cylinder.height));
-	if (ft_vec3f_dist(top_center, next_ray.origin) <= cylinder.radius)
+	top_center = v3f_add(cylinder.position, v3f_mul(cylinder.orientation, cylinder.height));
+	if (v3f_dist(top_center, next_ray.origin) <= cylinder.radius)
 		next_ray.normal = cylinder.orientation;
-	else if (ft_vec3f_dist(cylinder.position, next_ray.origin) <= cylinder.radius)
-		next_ray.normal = ft_vec3f_mul(cylinder.orientation, -1);
+	else if (v3f_dist(cylinder.position, next_ray.origin) <= cylinder.radius)
+		next_ray.normal = v3f_mul(cylinder.orientation, -1);
 	else
 	{
-		tmp = ft_vec3f_len(ft_vec3f_sub(cylinder.position, next_ray.origin));
+		tmp = v3f_len(v3f_sub(cylinder.position, next_ray.origin));
 		tmp2 = sqrtf(powf(tmp, 2) - powf(cylinder.radius, 2));
-		next_ray.normal = ft_vec3f_normalize(ft_vec3f_sub(next_ray.origin, ft_vec3f_add(cylinder.position, ft_vec3f_mul(cylinder.orientation, tmp2))));
+		next_ray.normal = v3f_normalize(v3f_sub(next_ray.origin, v3f_add(cylinder.position, v3f_mul(cylinder.orientation, tmp2))));
 	}
 	next_ray.has_normal_b = false;
 	return (next_ray);

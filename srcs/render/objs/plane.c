@@ -6,7 +6,7 @@
 /*   By: pguthaus <pguthaus@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/29 02:31:52 by pguthaus          #+#    #+#             */
-/*   Updated: 2020/05/07 17:09:16 by pguthaus         ###   ########.fr       */
+/*   Updated: 2020/05/08 17:51:22 by pguthaus         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,9 @@ t_bool				plane_intersects(t_plane plane, t_vec3f origin, t_vec3f dir, float *di
 	float calcul_a;
 	float b;
 
-	denom = -(ft_vec3f_dot(plane.orientation, plane.position));
-	calcul_a = ft_vec3f_dot(origin, plane.orientation) + denom;
-	b = ft_vec3f_dot(dir, plane.orientation);
+	denom = -(v3f_dot(plane.orientation, plane.position));
+	calcul_a = v3f_dot(origin, plane.orientation) + denom;
+	b = v3f_dot(dir, plane.orientation);
 	*dist = -(calcul_a / b);
 	return (*dist >= 0);
 }
@@ -29,7 +29,7 @@ t_second_ray		plane_compute_normal(t_plane plane, t_second_ray next_ray)
 {
 	next_ray.normal = plane.orientation;
 	next_ray.has_normal_b = true;
-	next_ray.normal_b = ft_vec3f_mul(plane.orientation, -1);
+	next_ray.normal_b = v3f_mul(plane.orientation, -1);
 	return (next_ray);
 }
 

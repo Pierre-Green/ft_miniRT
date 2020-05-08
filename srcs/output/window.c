@@ -6,7 +6,7 @@
 /*   By: pguthaus <pguthaus@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/26 03:12:31 by pguthaus          #+#    #+#             */
-/*   Updated: 2020/05/07 18:33:02 by pguthaus         ###   ########.fr       */
+/*   Updated: 2020/05/08 17:51:22 by pguthaus         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,17 +18,17 @@ static void				move(int key, t_carry *c)
 
 	cam = c->w->cameras[c->s->cam];
 	if (key == KEY_W)
-		cam->position = ft_vec3f_add(cam->position, ft_vec3f_mul(cam->forward, VELOCITY_MOVE));
+		cam->position = v3f_add(cam->position, v3f_mul(cam->forward, VELOCITY_MOVE));
 	else if (key == KEY_S)
-		cam->position = ft_vec3f_add(cam->position, ft_vec3f_mul(cam->forward, -1 * VELOCITY_MOVE));
+		cam->position = v3f_add(cam->position, v3f_mul(cam->forward, -1 * VELOCITY_MOVE));
 	else if (key == KEY_A)
-		cam->position = ft_vec3f_add(cam->position, ft_vec3f_mul(cam->right, -1 * VELOCITY_MOVE));
+		cam->position = v3f_add(cam->position, v3f_mul(cam->right, -1 * VELOCITY_MOVE));
 	else if (key == KEY_D)
-		cam->position = ft_vec3f_add(cam->position, ft_vec3f_mul(cam->right, VELOCITY_MOVE));
+		cam->position = v3f_add(cam->position, v3f_mul(cam->right, VELOCITY_MOVE));
 	else if (key == KEY_R)
-		cam->position = ft_vec3f_add(cam->position, ft_vec3f_init(0, VELOCITY_MOVE, 0));
+		cam->position = v3f_add(cam->position, v3f_init(0, VELOCITY_MOVE, 0));
 	else if (key == KEY_F)
-		cam->position = ft_vec3f_add(cam->position, ft_vec3f_init(0, -1 * VELOCITY_MOVE, 0));
+		cam->position = v3f_add(cam->position, v3f_init(0, -1 * VELOCITY_MOVE, 0));
 }
 
 static void				rotate(int key, t_carry *c)

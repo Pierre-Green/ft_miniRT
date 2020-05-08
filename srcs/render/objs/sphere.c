@@ -6,7 +6,7 @@
 /*   By: pguthaus <pguthaus@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/29 02:22:06 by pguthaus          #+#    #+#             */
-/*   Updated: 2020/05/07 17:08:35 by pguthaus         ###   ########.fr       */
+/*   Updated: 2020/05/08 17:51:22 by pguthaus         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,10 @@ t_bool			sphere_intersects(t_sphere sphere, t_vec3f origin, t_vec3f dir, float *
 	t_vec3f		difference;
 	float		calcul_c;
 
-	difference = ft_vec3f_sub(origin, sphere.position);
-	calcul_c = ft_vec3f_dot(difference, difference) - ((sphere.diameter / 2) * (sphere.diameter / 2));
-	k[0] = ft_vec3f_dot(dir, dir);
-	k[1] = 2 * ft_vec3f_dot(difference, dir);
+	difference = v3f_sub(origin, sphere.position);
+	calcul_c = v3f_dot(difference, difference) - ((sphere.diameter / 2) * (sphere.diameter / 2));
+	k[0] = v3f_dot(dir, dir);
+	k[1] = 2 * v3f_dot(difference, dir);
 	discriminant = k[1] * k[1] - 4 * k[0] * calcul_c;
 	if (discriminant < 0)
 		return (false);
@@ -38,7 +38,7 @@ t_bool			sphere_intersects(t_sphere sphere, t_vec3f origin, t_vec3f dir, float *
 
 t_second_ray		sphere_compute_normal(t_sphere sphere, t_second_ray next_ray)
 {
-	next_ray.normal = ft_vec3f_normalize(ft_vec3f_sub(next_ray.origin, sphere.position));
+	next_ray.normal = v3f_normalize(v3f_sub(next_ray.origin, sphere.position));
 	next_ray.has_normal_b = false;
 	return (next_ray);
 }

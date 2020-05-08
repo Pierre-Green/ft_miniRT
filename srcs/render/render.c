@@ -33,7 +33,7 @@ static t_vec3f		to_world(t_vec3f v, t_camera *cam)
     mat[2][1] = cam->forward.y;
     mat[2][2] = cam->forward.z;
 
-	return ft_vec3f_init(
+	return v3f_init(
 		v.x * mat[0][0] + v.y * mat[1][0] + v.z * mat[2][0],
 		v.x * mat[0][1] + v.y * mat[1][1] + v.z * mat[2][1],
 		v.x * mat[0][2] + v.y * mat[1][2] + v.z * mat[2][2]
@@ -50,12 +50,12 @@ static t_vec3f		get_raydir(int x, int y, t_carry *c)
 	camera = c->w->cameras[c->s->cam];
 	scale = tanf(fdeg2rad(camera->fov * 0.5));
 	aspect_ratio = c->w->res[0] / (float)c->w->res[1];
-	dir = ft_vec3f_init(
+	dir = v3f_init(
 		(2 * (x + 0.5) / (float)c->w->res[0] - 1) * aspect_ratio * scale,
 		(1 - 2 * (y + 0.5) / (float)c->w->res[1]) * scale,
 		1);
 	dir = to_world(dir, camera);
-	return (ft_vec3f_normalize(dir));
+	return (v3f_normalize(dir));
 }
 
 void				render(t_carry *c)

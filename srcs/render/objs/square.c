@@ -6,7 +6,7 @@
 /*   By: pguthaus <pguthaus@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/29 02:32:27 by pguthaus          #+#    #+#             */
-/*   Updated: 2020/05/07 17:09:45 by pguthaus         ###   ########.fr       */
+/*   Updated: 2020/05/08 17:51:22 by pguthaus         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,12 +20,12 @@ static t_bool		beetween_points(t_square square, t_vec3f origin, t_vec3f dir, flo
 	float		alpha;
 	float		beta;
 
-	temp = ft_vec3f_mul(dir, dist);
-	point = ft_vec3f_add(origin, temp);
-	ap = ft_vec3f_sub(point, square.a);
-	alpha = ft_vec3f_dot(ap, square.ab) / ft_vec3f_dot(square.ab, square.ab);
+	temp = v3f_mul(dir, dist);
+	point = v3f_add(origin, temp);
+	ap = v3f_sub(point, square.a);
+	alpha = v3f_dot(ap, square.ab) / v3f_dot(square.ab, square.ab);
 
-	beta = ft_vec3f_dot(ap, square.ac) / ft_vec3f_dot(square.ac, square.ac);
+	beta = v3f_dot(ap, square.ac) / v3f_dot(square.ac, square.ac);
 	if (alpha >= 0 && alpha <= 1 && beta >= 0 && beta <= 1)
 		return (true);
 	return (false);
@@ -37,9 +37,9 @@ t_bool				square_intersects(t_square square, t_vec3f origin, t_vec3f dir, float 
 	float calcul_a;
 	float b;
 
-	denom = -(ft_vec3f_dot(square.normal, square.center));
-	calcul_a = ft_vec3f_dot(origin, square.normal) + denom;
-	b = ft_vec3f_dot(dir, square.normal);
+	denom = -(v3f_dot(square.normal, square.center));
+	calcul_a = v3f_dot(origin, square.normal) + denom;
+	b = v3f_dot(dir, square.normal);
 	*dist = -(calcul_a / b);
 	if (*dist < 0)
 		return (false);
@@ -50,7 +50,7 @@ t_second_ray		square_compute_normal(t_square square, t_second_ray next_ray)
 {
 	next_ray.normal = square.normal;
 	next_ray.has_normal_b = true;
-	next_ray.normal_b = ft_vec3f_mul(square.normal, -1);
+	next_ray.normal_b = v3f_mul(square.normal, -1);
 	return (next_ray);
 }
 
