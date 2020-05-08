@@ -6,7 +6,7 @@
 /*   By: pguthaus <pguthaus@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/06 17:29:27 by pguthaus          #+#    #+#             */
-/*   Updated: 2020/05/08 17:51:22 by pguthaus         ###   ########.fr       */
+/*   Updated: 2020/05/08 18:01:01 by pguthaus         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,42 +53,34 @@ static t_second_ray	compute_normal(t_second_ray next_ray)
 	else if (next_ray.hitted->type == TRIANGLE)
 		return (triangle_compute_normal(next_ray.hitted->obj.triangle,
 		next_ray));
-	return (next_ray);
+	else
+		return (next_ray);
 }
 
 static t_second_ray	apply_light(t_second_ray next_ray, t_light *light)
 {
-	float			light_power;
+	float			light_powers[2];
+	int				i;
 
-	light_power = v3f_dot(next_ray.normal, next_ray.light_dir);
-	if (light_power > 0)
+	light_powers[0] = v3f_dot(next_ray.normal, next_ray.light_dir);
+	light_powers[1] = v3f_dot(next_ray.normal_b, next_ray.light_dir);
+	i = -1;
+	while (++i < 2)
 	{
-		next_ray.light_fac.x = ft_fmin(1.0f, next_ray.light_fac.x
-			+ (light_power * ((ft_color_get_r(light->color) / 255.0f)
-			* light->ratio)));
-		next_ray.light_fac.y = ft_fmin(1.0f, next_ray.light_fac.y
-			+ (light_power * ((ft_color_get_g(light->color) / 255.0f)
-			* light->ratio)));
-		next_ray.light_fac.z = ft_fmin(1.0f, next_ray.light_fac.z
-			+ (light_power * ((ft_color_get_b(light->color) / 255.0f)
-			* light->ratio)));
-		return (next_ray);
-	}
-	if (!next_ray.has_normal_b)
-		return (next_ray);
-	light_power = v3f_dot(next_ray.normal_b, next_ray.light_dir);
-	if (light_power > 0)
-	{
-		next_ray.light_fac.x = ft_fmin(1.0f, next_ray.light_fac.x
-			+ (light_power * ((ft_color_get_r(light->color) / 255.0f)
-			* light->ratio)));
-		next_ray.light_fac.y = ft_fmin(1.0f, next_ray.light_fac.y
-			+ (light_power * ((ft_color_get_g(light->color) / 255.0f)
-			* light->ratio)));
-		next_ray.light_fac.z = ft_fmin(1.0f, next_ray.light_fac.z
-			+ (light_power * ((ft_color_get_b(light->color) / 255.0f)
-			* light->ratio)));
-		return (next_ray);
+		if (i == 1 && !next_ray.has_normal_b)
+			break ;
+		if (light_powers[i] > 0)
+		{
+			next_ray.light_fac.x = ft_fmin(1.0f, next_ray.light_fac.x
+				+ (light_powers[i] * ((ft_color_get_r(light->color) / 255.0f)
+				* light->ratio)));
+			next_ray.light_fac.y = ft_fmin(1.0f, next_ray.light_fac.y
+				+ (light_powers[i] * ((ft_color_get_g(light->color) / 255.0f)
+				* light->ratio)));
+			next_ray.light_fac.z = ft_fmin(1.0f, next_ray.light_fac.z
+				+ (light_powers[i] * ((ft_color_get_b(light->color) / 255.0f)
+				* light->ratio)));
+		}
 	}
 	return (next_ray);
 }
@@ -102,12 +94,14 @@ static t_second_ray	lights(t_second_ray next_ray, t_carry *c)
 	i = 0;
 	while (i < c->w->lights_count)
 	{
-		next_ray.light_dir = v3f_normalize(v3f_sub(c->w->lights[i]->position, next_ray.origin));
+		next_ray.light_dir = v3f_normalize(v3f_sub(c->w->lights[i]->position,
+			next_ray.origin));
 		transmission = true;
 		j = 0;
 		while (j < c->w->objs_count)
 		{
-			if (c->w->objs[j] != next_ray.hitted && intersects(c->w->objs[j], &next_ray, c->w->lights[i]))
+			if (c->w->objs[j] != next_ray.hitted && intersects(c->w->objs[j],
+				&next_ray, c->w->lights[i]))
 			{
 				transmission = false;
 				break ;
@@ -124,13 +118,19 @@ static t_second_ray	lights(t_second_ray next_ray, t_carry *c)
 t_color				process_light_and_shadow(t_second_ray next_ray, t_carry *c)
 {
 	next_ray.light_fac = v3f_init(
-		(ft_color_get_r(c->w->ambiant_light->color) / 255.0f) * c->w->ambiant_light->ratio,
-		(ft_color_get_g(c->w->ambiant_light->color) / 255.0f) * c->w->ambiant_light->ratio,
-		(ft_color_get_b(c->w->ambiant_light->color) / 255.0f) * c->w->ambiant_light->ratio);
+		(ft_color_get_r(c->w->ambiant_light->color) / 255.0f)
+			* c->w->ambiant_light->ratio,
+		(ft_color_get_g(c->w->ambiant_light->color) / 255.0f)
+			* c->w->ambiant_light->ratio,
+		(ft_color_get_b(c->w->ambiant_light->color) / 255.0f)
+			* c->w->ambiant_light->ratio);
 	next_ray = compute_normal(next_ray);
 	next_ray = lights(next_ray, c);
-	next_ray.color = ft_color_set_r(next_ray.color, ft_color_get_r(next_ray.color) * next_ray.light_fac.x);
-	next_ray.color = ft_color_set_g(next_ray.color, ft_color_get_g(next_ray.color) * next_ray.light_fac.y);
-	next_ray.color = ft_color_set_b(next_ray.color, ft_color_get_b(next_ray.color) * next_ray.light_fac.z);
+	next_ray.color = ft_color_set_r(next_ray.color,
+		ft_color_get_r(next_ray.color) * next_ray.light_fac.x);
+	next_ray.color = ft_color_set_g(next_ray.color,
+		ft_color_get_g(next_ray.color) * next_ray.light_fac.y);
+	next_ray.color = ft_color_set_b(next_ray.color,
+		ft_color_get_b(next_ray.color) * next_ray.light_fac.z);
 	return (next_ray.color);
 }
