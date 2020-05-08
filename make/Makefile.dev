@@ -24,7 +24,7 @@ $(O_DIR)%.o: $(SRCDIR)%.c
 	$(CC) $(CFLAGS) -o $@ -c $<
 
 clean:
-	@rm -f $(O_FILES)
+	@rm -rf $(O_DIR) $(LFT_O_DIR)
 
 fclean:
-	@rm -f $(NAME)
+	@rm -f $(DEV_NAME)
