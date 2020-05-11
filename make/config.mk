@@ -4,8 +4,8 @@ CFLAGS			=			-Wall -Wextra -Werror -Iincludes -I./minilibx -Ilibft/includes
 MLX_ARGS		=			minilibx/libmlx.a -lXext -lX11 -lm
 
 # Output names
-NAME			=			minirt
-DEV_NAME		=			minirt_dev
+NAME			=			miniRT
+DEV_NAME		=			miniRT_dev
 LIBFT			=			libft/libft.a
 
 # Srcs

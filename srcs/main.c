@@ -6,7 +6,7 @@
 /*   By: pguthaus <pguthaus@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/11 15:56:21 by pguthaus          #+#    #+#             */
-/*   Updated: 2020/05/11 16:59:45 by pguthaus         ###   ########.fr       */
+/*   Updated: 2020/05/11 17:38:56 by pguthaus         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,11 +69,11 @@ static void			validate_args(int argc, char **argv, char **filename,
 		*filename = argv[0];
 	if (argc == 2)
 	{
-		if (ft_strncmp(argv[0], "-save", 5)
-			&& ft_strncmp(argv[1], "-save", 5))
+		if (ft_strncmp(argv[0], "--save", 5)
+			&& ft_strncmp(argv[1], "--save", 5))
 			error = true;
 		*savemode = true;
-		if (ft_strncmp(argv[0], "-save", 5))
+		if (ft_strncmp(argv[0], "--save", 5))
 			*filename = argv[0];
 		else
 			*filename = argv[1];
