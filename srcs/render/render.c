@@ -6,7 +6,7 @@
 /*   By: pguthaus <pguthaus@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/11 15:47:03 by pguthaus          #+#    #+#             */
-/*   Updated: 2020/05/11 15:47:51 by pguthaus         ###   ########.fr       */
+/*   Updated: 2020/05/11 17:36:33 by pguthaus         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,8 @@ static t_vec3f		get_raydir(int x, int y, t_carry *c)
 		(1 - 2 * (y + 0.5) / (float)c->w->res[1]) * scale,
 		1);
 	dir = to_world(dir, camera);
-	return (v3f_normalize(dir));
+	dir = v3f_add(dir, camera->position);
+	return (v3f_normalize(v3f_sub(dir, camera->position)));
 }
 
 void				render(t_carry *c)
@@ -71,8 +72,7 @@ void				render(t_carry *c)
 		x = 0;
 		while (x < c->w->res[0])
 		{
-			pixel = trace(to_world(origin, c->w->cameras[c->s->cam]),
-				get_raydir(x, y, c), c);
+			pixel = trace(origin, get_raydir(x, y, c), c);
 			pos = (((y * c->s->size_line) + (x * (c->s->bits_per_pixel / 8))));
 			set_pixel(pos, pixel, c);
 			x++;
