@@ -6,7 +6,7 @@
 /*   By: pguthaus <pguthaus@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/11 15:56:21 by pguthaus          #+#    #+#             */
-/*   Updated: 2020/05/11 15:56:23 by pguthaus         ###   ########.fr       */
+/*   Updated: 2020/05/11 16:59:45 by pguthaus         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,34 +49,34 @@ static void			init_state(t_carry *c)
 
 static void			create_buffer(t_carry *c)
 {
-	if (!(c->s->image = malloc(sizeof(uint8_t)
-			* (3 * c->w->res[0] * c->w->res[1]))))
-		freexit(-42, "Allocation failed", c);
-	c->s->bits_per_pixel = sizeof(uint8_t) * 8 * 3;
+	c->s->bits_per_pixel = sizeof(char) * 8 * 3;
 	c->s->size_line = c->w->res[0] * 8;
+	if (!(c->s->image = malloc(sizeof(char)
+			* (c->s->size_line * c->w->res[1]))))
+		freexit(-42, "Allocation failed", c);
 }
 
-static void			validate_args(const t_args *args, char **filename,
+static void			validate_args(int argc, char **argv, char **filename,
 	t_bool *savemode)
 {
 	t_bool			error;
 
 	error = false;
 	*savemode = false;
-	if (args->count == 0 || args->count > 2)
+	if (argc == 0 || argc > 2)
 		error = true;
-	if (args->count == 1)
-		*filename = args->args[0];
-	if (args->count == 2)
+	if (argc == 1)
+		*filename = argv[0];
+	if (argc == 2)
 	{
-		if (ft_strncmp(args->args[0], "-save", 5)
-			&& ft_strncmp(args->args[1], "-save", 5))
+		if (ft_strncmp(argv[0], "-save", 5)
+			&& ft_strncmp(argv[1], "-save", 5))
 			error = true;
 		*savemode = true;
-		if (ft_strncmp(args->args[0], "-save", 5))
-			*filename = args->args[0];
+		if (ft_strncmp(argv[0], "-save", 5))
+			*filename = argv[0];
 		else
-			*filename = args->args[1];
+			*filename = argv[1];
 	}
 	if (error)
 	{
@@ -87,17 +87,14 @@ static void			validate_args(const t_args *args, char **filename,
 
 int					main(int argc, char **argv)
 {
-	t_args			*args;
 	char			*file_name;
 	t_carry			*c;
 
-	if (!(args = ft_args_start(argc, argv)))
-		freexit(-42, "Args parsing error", 0);
 	if (!(c = malloc(sizeof(t_carry))))
 		freexit(-42, "Allocation error", 0);
 	init_state(c);
 	init_world(c);
-	validate_args(args, &file_name, &(c->s->savemode));
+	validate_args(--argc, ++argv, &file_name, &(c->s->savemode));
 	load_world(file_name, c);
 	if (!c->s->savemode)
 		init_window(c);
@@ -105,6 +102,5 @@ int					main(int argc, char **argv)
 		create_buffer(c);
 	render(c);
 	do_output(c);
-	ft_args_end(&args);
 	freexit(0, 0, c);
 }

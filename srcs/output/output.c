@@ -6,7 +6,7 @@
 /*   By: pguthaus <pguthaus@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/11 15:39:15 by pguthaus          #+#    #+#             */
-/*   Updated: 2020/05/11 15:39:33 by pguthaus         ###   ########.fr       */
+/*   Updated: 2020/05/11 17:00:56 by pguthaus         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,5 @@ void				do_output(t_carry *c)
 		mlx_loop(c->s->mlx_ptr);
 	}
 	else
-	{
-	}
+		write_bpm_file(c);
 }

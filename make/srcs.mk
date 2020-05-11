@@ -23,6 +23,7 @@ SRCS+=parser/error.c
 SRCS+=parser/parse_resolution.c
 SRCS+=output/window.c
 SRCS+=output/output.c
+SRCS+=output/bmp.c
 SRCS+=freexit.c
 SRCS+=objects/square_utils.c
 SRCS+=objects/cylinder_utils.c

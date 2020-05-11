@@ -6,7 +6,7 @@
 /*   By: pguthaus <pguthaus@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/06 17:30:13 by pguthaus          #+#    #+#             */
-/*   Updated: 2020/05/11 15:42:51 by pguthaus         ###   ########.fr       */
+/*   Updated: 2020/05/11 16:36:08 by pguthaus         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 # define USAGE "Usage: ./minirt [-save] file"
 # define V_MOVE 1
 # define VELOCITY_ROTATE 0.02
+# define BMP_HEADER 122
 
 typedef struct		s_carry
 {
@@ -33,7 +34,7 @@ void				render(t_carry *c);
 t_color				trace(t_vec3f origin, t_vec3f raydir, t_carry *c);
 t_color				process_light_and_shadow(t_second_ray next_ray, t_carry *c);
 void				do_output(t_carry *c);
-
+void				write_bpm_file(t_carry *c);
 void				freexit(int exit_code, const char *message, t_carry *c);
 
 #endif

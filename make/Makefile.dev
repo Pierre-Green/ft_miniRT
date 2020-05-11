@@ -2,7 +2,7 @@ include make/config.mk
 include make/srcs.mk
 include libft/make/srcs.mk
 
-CFLAGS			+=			-g
+CFLAGS			+=			-g 
 
 LFT_O_DIR		=			$(addprefix $(OUTDIR), dev-libft/)
 LFT_O_FILES		=			$(addprefix $(LFT_O_DIR), $(FT_SRCS:.c=.o))
