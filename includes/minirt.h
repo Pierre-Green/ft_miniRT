@@ -6,7 +6,7 @@
 /*   By: pguthaus <pguthaus@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/06 17:30:13 by pguthaus          #+#    #+#             */
-/*   Updated: 2020/05/06 17:54:56 by pguthaus         ###   ########.fr       */
+/*   Updated: 2020/05/11 15:42:51 by pguthaus         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 # include <float.h>
 # include <math.h>
 # define USAGE "Usage: ./minirt [-save] file"
-# define VELOCITY_MOVE 1
+# define V_MOVE 1
 # define VELOCITY_ROTATE 0.02
 
 typedef struct		s_carry

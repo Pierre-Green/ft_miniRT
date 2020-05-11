@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pguthaus <pguthaus@student.42.fr>              +#+  +:+       +#+        */
+/*   By: pguthaus <pguthaus@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/11/22 20:20:04 by pguthaus          #+#    #+#             */
-/*   Updated: 2020/04/17 18:41:52 by pguthaus           ###   ########.fr       */
+/*   Created: 2020/05/11 15:38:22 by pguthaus          #+#    #+#             */
+/*   Updated: 2020/05/11 15:57:41 by pguthaus         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,8 @@ static int					parse_int(char *line, unsigned int *pos, t_carry *c)
 	return (res);
 }
 
-static float				parse_float(char *line, unsigned int *pos, t_carry *c)
+static float				parse_float(char *line, unsigned int *pos,
+	t_carry *c)
 {
 	float					res;
 
@@ -41,7 +42,8 @@ static float				parse_float(char *line, unsigned int *pos, t_carry *c)
 	return (res);
 }
 
-static t_color				parse_color(char *line, unsigned int *pos, t_carry *c)
+static t_color				parse_color(char *line, unsigned int *pos,
+	t_carry *c)
 {
 	uint8_t					tmp[3];
 	uint8_t					i;
@@ -72,14 +74,16 @@ static t_vec3f				parse_vec3f(char *line, unsigned int *pos,
 	while (i < 3)
 	{
 		if (!ft_isdigit(line[*pos]) && line[*pos] != '-' && line[*pos] != '.')
-			parse_error(line, *pos, "Vec error, should be formatted like this: 0.5,-3.4,5.4", c);
+			parse_error(line, *pos,
+				"Vec error, should be formatted like this: 0.5,-3.4,5.4", c);
 		tmp[i] = ft_atof(&line[*pos]);
 		if (normalized && (tmp[i] < -1.0f || tmp[i] > 1.0f))
 			parse_error(line, *pos, "Vec shoul be normalized", c);
 		while (ft_isdigit(line[*pos]) || line[*pos] == '-' || line[*pos] == '.')
 			(*pos)++;
 		if (line[*pos] != ',' && i != 2)
-			parse_error(line, *pos, "Vec error, don't put a space before a coma", c);
+			parse_error(line, *pos,
+				"Vec error, don't put a space before a coma", c);
 		(*pos)++;
 		i++;
 	}

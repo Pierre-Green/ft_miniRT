@@ -6,7 +6,7 @@
 /*   By: pguthaus <pguthaus@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/01 22:10:25 by pguthaus          #+#    #+#             */
-/*   Updated: 2020/05/08 17:51:22 by pguthaus         ###   ########.fr       */
+/*   Updated: 2020/05/11 15:45:22 by pguthaus         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,10 +43,10 @@ static void	set_square_points(t_square *dest)
 
 void		new_square(t_square *dest, t_line_result *results)
 {
-    dest->center = results[0].vec3f;
-    dest->orientation = results[1].vec3f;
-    dest->height = results[2].f;
-    dest->color = results[3].color;
+	dest->center = results[0].vec3f;
+	dest->orientation = results[1].vec3f;
+	dest->height = results[2].f;
+	dest->color = results[3].color;
 	set_square_points(dest);
 	dest->ab = v3f_sub(dest->b, dest->a);
 	dest->ac = v3f_sub(dest->c, dest->a);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   freexit.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pguthaus <pguthaus@student.42.fr>              +#+  +:+       +#+        */
+/*   By: pguthaus <pguthaus@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/11/22 19:29:08 by pguthaus          #+#    #+#             */
-/*   Updated: 2020/04/17 18:28:49 by pguthaus           ###   ########.fr       */
+/*   Created: 2020/05/11 15:56:41 by pguthaus          #+#    #+#             */
+/*   Updated: 2020/05/11 15:56:49 by pguthaus         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ static void			free_world(t_world *world)
 {
 	unsigned int	i;
 
-	i =  0;
+	i = 0;
 	if (world->ambiant_light)
 		free((void *)world->ambiant_light);
 	while (i < world->cameras_count)

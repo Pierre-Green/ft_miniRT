@@ -6,13 +6,14 @@
 /*   By: pguthaus <pguthaus@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/29 02:22:06 by pguthaus          #+#    #+#             */
-/*   Updated: 2020/05/08 17:51:22 by pguthaus         ###   ########.fr       */
+/*   Updated: 2020/05/11 15:52:10 by pguthaus         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "world.h"
 
-t_bool			sphere_intersects(t_sphere sphere, t_vec3f origin, t_vec3f dir, float *dist)
+t_bool			sphere_intersects(t_sphere sphere, t_vec3f origin, t_vec3f dir,
+	float *dist)
 {
 	float		discriminant;
 	float		k[2];
@@ -21,7 +22,8 @@ t_bool			sphere_intersects(t_sphere sphere, t_vec3f origin, t_vec3f dir, float *
 	float		calcul_c;
 
 	difference = v3f_sub(origin, sphere.position);
-	calcul_c = v3f_dot(difference, difference) - ((sphere.diameter / 2) * (sphere.diameter / 2));
+	calcul_c = v3f_dot(difference, difference) - ((sphere.diameter / 2)
+		* (sphere.diameter / 2));
 	k[0] = v3f_dot(dir, dir);
 	k[1] = 2 * v3f_dot(difference, dir);
 	discriminant = k[1] * k[1] - 4 * k[0] * calcul_c;
@@ -36,18 +38,20 @@ t_bool			sphere_intersects(t_sphere sphere, t_vec3f origin, t_vec3f dir, float *
 	return (true);
 }
 
-t_second_ray		sphere_compute_normal(t_sphere sphere, t_second_ray next_ray)
+t_second_ray	sphere_compute_normal(t_sphere sphere, t_second_ray next_ray)
 {
 	next_ray.normal = v3f_normalize(v3f_sub(next_ray.origin, sphere.position));
 	next_ray.has_normal_b = false;
 	return (next_ray);
 }
 
-t_bool				sphere_second_ray(t_sphere sphere, t_second_ray *next_ray, float *dist)
+t_bool			sphere_second_ray(t_sphere sphere, t_second_ray *next_ray,
+	float *dist)
 {
-	t_bool			does_intersect;
+	t_bool		does_intersect;
 
-	does_intersect = sphere_intersects(sphere, next_ray->origin, next_ray->light_dir, dist);
+	does_intersect = sphere_intersects(sphere, next_ray->origin,
+		next_ray->light_dir, dist);
 	if (does_intersect && *dist >= 0)
 		return (true);
 	return (false);

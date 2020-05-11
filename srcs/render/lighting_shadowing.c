@@ -6,7 +6,7 @@
 /*   By: pguthaus <pguthaus@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/06 17:29:27 by pguthaus          #+#    #+#             */
-/*   Updated: 2020/05/08 18:01:01 by pguthaus         ###   ########.fr       */
+/*   Updated: 2020/05/11 15:48:36 by pguthaus         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,14 +98,11 @@ static t_second_ray	lights(t_second_ray next_ray, t_carry *c)
 			next_ray.origin));
 		transmission = true;
 		j = 0;
-		while (j < c->w->objs_count)
+		while (j < c->w->objs_count && transmission)
 		{
 			if (c->w->objs[j] != next_ray.hitted && intersects(c->w->objs[j],
 				&next_ray, c->w->lights[i]))
-			{
 				transmission = false;
-				break ;
-			}
 			j++;
 		}
 		if (transmission)
